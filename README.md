@@ -59,8 +59,11 @@ _phone = ""
 _password = ""
 
 # 学校的学习通id
-fid = 2397  # 填写自己学校的fid
-refer = "http://scxcc.fanya.chaoxing.com/login/auth"    # 每个学校的可能不一样
+fid = 2397  # 选填
+refer = "http://scxcc.fanya.chaoxing.com/login/auth"  # 选填
+
+work_name = "第1章作业"
+course_name = "操作系统原理"
 
 if __name__ == '__main__':
     """查询所有未作的作业，并在已完成的答案中提取正确答案并保存在answer文件中"""
@@ -78,17 +81,17 @@ if __name__ == '__main__':
     user_1 = XcxyXxt(phone=phone, password=password, fid=fid, refer=refer)
     user_1.Login()
     user_1.getCourseDate()
-    user_1.getCourseWork("数据结构与算法")
-    answer = user_1.getWorkAnswer("第1章 绪论-作业")
+    user_1.getCourseWork(course_name)
+    answer = user_1.getWorkAnswer(work_name)
     user_1.dateToJsonFile("1.json", answer)
     print("<<<<======================================================>>>>\n\n\n")
     print("<<<<======================================================>>>>")
     user_2 = XcxyXxt(phone=_phone, password=_password, fid=fid, refer=refer)
     user_2.Login()
     user_2.getCourseDate()
-    user_2.getCourseWork("数据结构与算法")
-    user_2.getWorkView("第1章 绪论-作业", "1.json")
-    user_2.completedWork(work_name="第1章 绪论-作业")    # 完成作业
+    user_2.getCourseWork(course_name)
+    user_2.getWorkView(work_name, "1.json")
+    user_2.completedWork(work_name=work_name)
     print("<<<<======================================================>>>>")
 ```
 1.json
