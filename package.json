@@ -1,0 +1,14 @@
+{
+  "name": "new_xxt",
+  "version": "1.0.0",
+  "description": "<div align=\"center\">\r     <h1 align=\"center\">\r      学习通,泛雅，超星 作业一键完成\r     </h1>\r <p>平时经常会遇到老师布置学习通上的作业，并且给发布的题和往届的基本一样，只是顺序可能不一样，所以为了更加方便的学习，就有了这个脚本</p>\r </div>",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "crypto-js": "^4.1.1"
+  }
+}
