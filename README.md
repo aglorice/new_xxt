@@ -31,7 +31,7 @@ git clone https://github.com/aglorice/new_xxt.git
 
 #### 2.进入目录
 ```bash
-cd NewXxt
+cd new_xxt
 ```
 #### 3.安装依赖
 ```bash
