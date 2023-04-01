@@ -5,7 +5,7 @@
 <p>平时经常会遇到老师布置学习通上的作业，并且给发布的题和往届的基本一样，只是顺序可能不一样，所以为了更加方便的学习，就有了这个脚本</p>
 </div>
 
-![GitHub stars](https://img.shields.io/github/stars/aglorice/NewXxt.svg)
+![GitHub stars](https://img.shields.io/github/stars/aglorice/new_xxt.svg)
 
 ## 实现方法
 - 从已完成该课程的作业的账号中获取作业答案
@@ -26,7 +26,7 @@
 ## 使用方法
 #### 1.克隆到本地
 ```bash
-git clone https://github.com/aglorice/NewXxt.git
+git clone https://github.com/aglorice/new_xxt.git
 ```
 
 #### 2.进入目录
@@ -127,7 +127,7 @@ if __name__ == '__main__':
 ![](../../Desktop/NewXxt/img/image-20230315170415071.png)
 
 ## 注意事项
-- 仓库发布的`NewXxt`项目中涉及的任何脚本，仅用于测试和学习研究，禁止用于商业用途，不能保证其合法性，准确性，完整性和有效性，请根据情况自行判断。
+- 仓库发布的`new_xxt`项目中涉及的任何脚本，仅用于测试和学习研究，禁止用于商业用途，不能保证其合法性，准确性，完整性和有效性，请根据情况自行判断。
 - 本项目遵循GPL-3.0 License协议，如果本特别声明与GPL-3.0 License协议有冲突之处，以本特别声明为准。
-- 以任何方式查看此项目的人或直接或间接使用`NewXxt`项目的任何脚本的使用者都应仔细阅读此声明。`aglorice` 保留随时更改或补充此免责声明的权利。一旦使用并复制了任何相关脚本或`NewXxt`项目，则视为您已接受此免责声明。
+- 以任何方式查看此项目的人或直接或间接使用`new_xxt`项目的任何脚本的使用者都应仔细阅读此声明。`aglorice` 保留随时更改或补充此免责声明的权利。一旦使用并复制了任何相关脚本或`new_xxt`项目，则视为您已接受此免责声明。
 
