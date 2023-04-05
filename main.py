@@ -12,8 +12,8 @@ _password = ""
 fid = 2397  # 选填
 refer = "http://scxcc.fanya.chaoxing.com/login/auth"  # 选填
 
-work_name = "第1章作业"
-course_name = "操作系统原理"
+work_name = "单元一、二、三课后作业.xls"
+course_name = "建筑工程质量验收与资料"
 
 if __name__ == '__main__':
     # """查询所有未作的作业，并在已完成的答案中提取正确答案并保存在answer文件中"""
