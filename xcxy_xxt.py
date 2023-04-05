@@ -4,6 +4,7 @@
 # @Email  :401208941@qq.com
 # @PROJECT_NAME :xcxy_xxt
 # @File :  xcxy_xxt.py
+import difflib
 import json
 import os
 import pickle
@@ -386,12 +387,11 @@ class XcxyXxt:
             _title = ""
             option = []
             answer = []
-            title_type = _work_answer.find_next("span").string.replace("(", "").replace(")", "")
+            title_type = _work_answer.find_next("span").string.split(",")[0].replace("(", "").replace(")", "")
             # 判断题目是否存在于p标签
 
             title = _work_answer.find_all("h3", attrs={"class": "mark_name colorDeep"}) + _work_answer.find_all("p")
             _title = self.connectTitle(title, title_type)
-
             if title_type == "单选题":
                 option_list = _work_answer.find_all_next("li")[0:4]
                 for _option in option_list:
@@ -411,8 +411,13 @@ class XcxyXxt:
                         0].text.replace("正确答案: ", "").replace("\n", "").replace("\r", "").replace("\t", "").replace(" ",
                                                                                                                     "")
                 except Exception as e:
-                    print(f"[error]---发生了错误{e},这道题还没有公布正确答案")
-                    answer = None
+                    print(f"[error]---发生了错误{e},这道题还没有公布正确答案,正在获取已完成作业的者的答案")
+                    answer = _work_answer.find_all_next("span", attrs={"class": "colorDeep marginRight40 fl"})[
+                        0].text.replace("我的答案: ", "").replace("\n", "").replace("\r", "").replace("\t", "").replace(" ",
+                                                                                                                    "")
+                    if answer is None:
+                        print(f"[error]---无法找到正确答案！！")
+                        exit(0)
             if title_type == "多选题":
                 try:
                     d_answer = _work_answer.find_next("span").find_next("span").contents[1]
@@ -502,7 +507,7 @@ class XcxyXxt:
             _title = ""
             option = []
             _id = item.attrs['data']
-            title_type = item.find_next("span").string.replace("(", "").replace(")", "")
+            title_type = item.find_next("span").string.split(",")[0].replace("(", "").replace(")", "")
             title = item.find_all("h3", attrs={"class": "mark_name colorDeep fontLabel"}) + item.find_all("p")
             _title = self.connectTitle(title, title_type)
 
@@ -514,6 +519,7 @@ class XcxyXxt:
                     option.append(temp[1] + "." + temp[2])
             else:
                 option = None
+
             answer = self.findAnswer(file, item.attrs['data'], option, title_type)
             question_list.append({
                 "id": _id,
@@ -522,7 +528,6 @@ class XcxyXxt:
                 "answer": answer
             })
         self.question_list = question_list
-        print(self.question_list)
         print(f"[info]---成功获取到了该作业的答案")
 
     def connectTitle(self, title, title_type):
@@ -538,32 +543,34 @@ class XcxyXxt:
             _title = _title + "。"
         return _title
 
+    def diffOption(self, item, options):
+        sample = []
+        for i in options:
+            sample.append(difflib.SequenceMatcher(None, i, item).quick_ratio())
+        return sample.index(max(sample))
+
     def findAnswer(self, file, title_id, option, title_type):
         answer = ""
         temp = ""
         _question_dict = self.jsonFileToDate(file)[file]
         for _question in _question_dict:
             if _question['id'] == title_id:
-                if title_type == "选择题":
+                if title_type == "选择题" or title_type == "单选题":
                     for item in _question["option"]:
                         if _question["answer"] in item:
                             temp = item
-                            break
-                    for _item in option:
-                        if _item == temp:
-                            answer = _item.split(".")[0]
-                            break
+                    index = self.diffOption(temp, _question["option"])
+                    answer = option[index].split(".")[0]
                 elif title_type == "多选题":
                     temp = []
                     answer = ""
                     for item in _question["option"]:
                         if item.split(".")[0] in _question["answer"][0]:
-                            temp.append(item.split(".")[1])
+                            temp.append(item)
                             continue
-                    for _item in option:
-                        for item in temp:
-                            if item.replace(" ", "") in _item:
-                                answer = answer + _item.split(".")[0]
+                    for item in temp:
+                        index = self.diffOption(item, option)
+                        answer = answer + option[index].split(".")[0]
                 else:
                     answer = _question["answer"]
         if answer is None:
@@ -682,6 +689,7 @@ class XcxyXxt:
             "saveStatus": self.commit_date["saveStatus"],
             "version": self.commit_date["version"],
         }
+
         commit_answer = self.sees.post(
             url=commit_answer,
             params=params,
@@ -690,6 +698,6 @@ class XcxyXxt:
                 "User-Agent": self.header,
             },
         )
-        print(commit_answer.text)
+
         if "success" in commit_answer.text:
             print(f"[info]---作业已完成，最终的分数为{self.findResultNum(work_name)}")
