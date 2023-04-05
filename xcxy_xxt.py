@@ -701,3 +701,5 @@ class XcxyXxt:
 
         if "success" in commit_answer.text:
             print(f"[info]---作业已完成，最终的分数为{self.findResultNum(work_name)}")
+        elif "无效参数" in commit_answer.text:
+            print("请重新运行一次！！！")
