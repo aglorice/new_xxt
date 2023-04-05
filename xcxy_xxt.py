@@ -395,13 +395,13 @@ class XcxyXxt:
             if title_type == "单选题":
                 option_list = _work_answer.find_all_next("li")[0:4]
                 for _option in option_list:
-                    option.append(_option.text)
+                    option.append(_option.text.replace(" ",""))
             elif title_type == "多选题":
                 option_list = _work_answer.find_all_next("ul")[0]
                 for _option in option_list:
                     if _option == "\n":
                         continue
-                    option.append(_option.text)
+                    option.append(_option.text.replace(" ",""))
             else:
                 option = None
 
@@ -701,5 +701,5 @@ class XcxyXxt:
 
         if "success" in commit_answer.text:
             print(f"[info]---作业已完成，最终的分数为{self.findResultNum(work_name)}")
-        elif "无效参数" in commit_answer.text:
-            print("请重新运行一次！！！")
+        else:
+            print("[error]---请重新运行一次！！！")
