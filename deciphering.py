@@ -9,7 +9,7 @@ import execjs
 
 
 def encrypto(phone, pwd):
-    js_file = open('../../PycharmProjects/new_xxt/js/decrypt.js', 'r', encoding="utf-8").read()
+    js_file = open('decrypt.js', 'r', encoding="utf-8").read()
 
     params = execjs.compile(js_file).call("encrypto", phone, pwd)
     return params
