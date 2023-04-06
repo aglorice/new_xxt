@@ -35,7 +35,7 @@ cd new_xxt
 ```
 #### 3.安装依赖
 ```bash
-pip install requirements.txt
+pip install -r requirements.txt
 
 npm install
 ```
