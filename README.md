@@ -14,7 +14,7 @@
 
 
 ## 功能支持列表
-> 该脚本目前已在其他的学校的学习通上成功运行，如果你在使用的时候遇到了问题，欢迎提交[issue](https://github.com/aglorice/new_xxt/issues)
+> 该脚本目前已在其他的学校的学习通上成功运行，如果你在使用的时候遇到了问题，欢迎提交[issue](https://github.com/aglorice/new_xxt/issues)😍😍😍
 * [x] 获取所有的课程
 * [x] 获取课程作业
 * [x] 提取已完成的作业的答案
