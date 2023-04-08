@@ -14,7 +14,7 @@
 
 
 ## 功能支持列表
-> 该脚本目前只在我的学校的学习通上实验，其他学校原理类似
+> 该脚本目前已在其他的学校的学习通上成功运行，如果你在使用的时候遇到了问题，欢迎提交[issue](https://github.com/aglorice/new_xxt/issues)
 * [x] 获取所有的课程
 * [x] 获取课程作业
 * [x] 提取已完成的作业的答案
@@ -59,8 +59,8 @@ _phone = ""
 _password = ""
 
 # 学校的学习通id
-fid = 2397  # 选填
-refer = "http://scxcc.fanya.chaoxing.com/login/auth"  # 选填
+fid = 2397  # 选填(不填也没有影响)
+refer = "http://scxcc.fanya.chaoxing.com/login/auth"  # 选填(不填也没有影响)
 
 work_name = "第1章作业"
 course_name = "操作系统原理"
