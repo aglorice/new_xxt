@@ -6,6 +6,9 @@
 </div>
 
 ![GitHub stars](https://img.shields.io/github/stars/aglorice/new_xxt.svg)
+![python](https://img.shields.io/badge/python-3.6-blue)
+![contributors](https://badgen.net/github/contributors/aglorice/new_xxt)
+![prs](https://badgen.net/github/prs/aglorice/new_xxt)
 
 ## 1️⃣实现方法
 - 从已完成该课程的作业的账号中获取作业答案
@@ -46,7 +49,7 @@ python3 main.py
 #### 注意：因为本脚本在账号登录的时候用到了`crypto-js`,需要nodejs，请提前配置。如果在运行的时候提示无效参数，直接再次运行一次就可以了。
 
 ## 4️⃣示例
-main.py
+`main.py`
 ```python
 from xcxy_xxt import XcxyXxt
 
@@ -83,18 +86,18 @@ if __name__ == '__main__':
     user_1.getCourseDate()
     user_1.getCourseWork(course_name)
     answer = user_1.getWorkAnswer(work_name)
-    user_1.dateToJsonFile("1.json", answer)
+    user_1.dateToJsonFile("answer.json", answer)
     print("<<<<======================================================>>>>\n\n\n")
     print("<<<<======================================================>>>>")
     user_2 = XcxyXxt(phone=_phone, password=_password, fid=fid, refer=refer)
     user_2.Login()
     user_2.getCourseDate()
     user_2.getCourseWork(course_name)
-    user_2.getWorkView(work_name, "1.json")
+    user_2.getWorkView(work_name, "answer.json")
     user_2.completedWork(work_name=work_name)
     print("<<<<======================================================>>>>")
 ```
-1.json
+`answer.json`
 ```json
 {
   "1.json": [
