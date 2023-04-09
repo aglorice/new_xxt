@@ -2,8 +2,8 @@
 # @Time :2023/3/12 18:38
 # @Author :小岳
 # @Email  :401208941@qq.com
-# @PROJECT_NAME :xcxy_xxt
-# @File :  xcxy_xxt.py
+# @PROJECT_NAME :new_xxt
+# @File :  new_xxt.py
 import difflib
 import json
 import os
@@ -58,7 +58,6 @@ class XcxyXxt:
             headers={
                 "Host": "passport2.chaoxing.com",
                 "Origin": "http://passport2.chaoxing.com",
-                "Referer": "http://passport2.chaoxing.com/login?loginType=4&newversion=true&fid=2397&refer=http://scxcc.fanya.chaoxing.com/login/auth",
                 "User-Agent": self.header,
             },
             data={
