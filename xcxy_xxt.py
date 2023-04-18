@@ -403,7 +403,8 @@ class XcxyXxt:
                     option.append(_option.text.replace(" ",""))
             else:
                 option = None
-
+            if title_type == "简答题":
+                answer = _work_answer.find_next("dd").string
             if title_type == "单选题" or title_type == "判断题":
                 try:
                     answer = _work_answer.find_all_next("span", attrs={"class": "colorGreen marginRight40 fl"})[
