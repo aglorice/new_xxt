@@ -51,7 +51,7 @@ class XcxyXxt:
     def decrypto(self, phone, password):
         return encrypto(phone, password)
 
-    def Login(self):
+    def Login(self,batch = False):
         # 进入到自己学院的学习通
         self.sees.post(
             url=LOGIN_URL,
@@ -87,7 +87,10 @@ class XcxyXxt:
         soup = BeautifulSoup(view.text, "lxml")
         if "用户登录" in str(soup):
             print("[info]---登录失败，请检查账号或者密码是否正确")
-            exit(0)
+            if not batch:
+                exit(0)
+            else:
+                return 0
 
         # 获取菜单
         self.menus_list = self.getMenus(soup)
@@ -274,7 +277,7 @@ class XcxyXxt:
         print("=======================================")
         self.courses = courses
 
-    def getCourseWork(self, course_name: str, sleep_time=0):
+    def getCourseWork(self, course_name: str, sleep_time=0,batch = False):
         """
         获取该课程下的所有作业
         :param sleep_time:
@@ -321,10 +324,16 @@ class XcxyXxt:
         )
         if "无权限的操作" in work_html.text:
             print("[error]---爬取课程作业的时候没有权限")
-            exit(0)
+            if not batch:
+                exit(0)
+            else:
+                return 0
         elif "无效的用户" in work_html.text:
             print("[error]---无效的用户！")
-            exit(0)
+            if not batch:
+                exit(0)
+            else:
+                return 0
         else:
             print(f"[info]---获取{course_name}的作业成功")
         work_li_list_soup = BeautifulSoup(work_html.text, "lxml")
@@ -645,7 +654,7 @@ class XcxyXxt:
         result_view_soup = result_view.find("span", attrs={"class": "resultNum"})
         return result_view_soup.text
 
-    def completedWork(self, work_name,batch=False):
+    def completedWork(self, work_name, batch=False):
         if batch:
             return
         # https://mooc1.chaoxing.com/work/validate?courseId=204924252&classId=73792554&cpi=269513930
@@ -715,9 +724,11 @@ def batchWork(file, course_name, work_name, fid, refer):
         json_data = json.loads(f_.read())['user']
     for item in json_data:
         user = XcxyXxt(phone=item["phone"], password=item["password"], fid=fid, refer=refer)
-        user.Login()
+        if user.Login(batch=True) == 0:
+            continue
         user.getCourseDate()
-        user.getCourseWork(course_name)
-        user.getWorkView(work_name, "answer.json",batch=True)
-        user.completedWork(work_name=work_name,batch=True)
+        if user.getCourseWork(course_name, batch=True) == 0:
+            continue
+        user.getWorkView(work_name, "answer.json", batch=True)
+        user.completedWork(work_name=work_name, batch=True)
         print(f"《《《《《《成功完成了{item['phone']}的作业》》》》》》")

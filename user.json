@@ -1,8 +1,12 @@
 {
   "user": [
     {
-      "phone": "手机号",
-      "password": "密码"
+      "phone": "123123",
+      "password":  "234235423"
+    },
+    {
+      "phone": "",
+      "password": ""
     },
     {
       "phone": "123123",
