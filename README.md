@@ -52,7 +52,7 @@ python3 main.py
 ## 4️⃣示例
 `main.py`
 ```python
-from xcxy_xxt import XcxyXxt
+from xcxy_xxt import XcxyXxt,batchWork
 
 # 已完成该作业的账号
 
@@ -98,6 +98,13 @@ if __name__ == '__main__':
     user_2.getCourseWork(course_name)
     user_2.getWorkView(work_name, "answer.json")
     user_2.completedWork(work_name=work_name)
+    print("<<<<======================================================>>>>")
+
+    """批量完成作业"""
+    print("<<<<======================================================>>>>")
+
+    batchWork(work_name=work_name, course_name=course_name, fid=fid, refer=refer, file='user.json')
+
     print("<<<<======================================================>>>>")
 ```
 `answer.json`
