@@ -394,13 +394,13 @@ class XcxyXxt:
             if title_type == "单选题":
                 option_list = _work_answer.find_all_next("li")[0:4]
                 for _option in option_list:
-                    option.append(_option.text.replace(" ",""))
+                    option.append(_option.text.replace(" ", ""))
             elif title_type == "多选题":
                 option_list = _work_answer.find_all_next("ul")[0]
                 for _option in option_list:
                     if _option == "\n":
                         continue
-                    option.append(_option.text.replace(" ",""))
+                    option.append(_option.text.replace(" ", ""))
             else:
                 option = None
             if title_type == "简答题":
@@ -451,14 +451,17 @@ class XcxyXxt:
                 return True
         return False
 
-    def getWorkView(self, work_name, file):
+    def getWorkView(self, work_name, file, batch=False):
         DO_WORK_URL = "https://mooc1.chaoxing.com/mooc2/work/dowork"
         # 判断需要完成作业的状态
         question_list = []
         _question_list = []
         if self.is_completed(work_name=work_name):
             print(f"[info]---你的作业<<{work_name}>>已经完成了,已经不需要完成了✌️✌️✌️")
-            exit(0)
+            if batch == False:
+                exit(0)
+            else:
+                return
 
         work_view_html = self.sees.get(
             url=self.baseWorkGetUrl(work_name),
@@ -642,7 +645,9 @@ class XcxyXxt:
         result_view_soup = result_view.find("span", attrs={"class": "resultNum"})
         return result_view_soup.text
 
-    def completedWork(self, work_name):
+    def completedWork(self, work_name,batch=False):
+        if batch:
+            return
         # https://mooc1.chaoxing.com/work/validate?courseId=204924252&classId=73792554&cpi=269513930
         is_commit = "https://mooc1.chaoxing.com/work/validate"
         commit_answer = "https://mooc1.chaoxing.com/work/addStudentWorkNewWeb"
@@ -703,3 +708,16 @@ class XcxyXxt:
             print(f"[info]---作业已完成，最终的分数为{self.findResultNum(work_name)}")
         else:
             print("[error]---请重新运行一次！！！")
+
+
+def batchWork(file, course_name, work_name, fid, refer):
+    with open(file, 'r', encoding="utf-8") as f_:
+        json_data = json.loads(f_.read())['user']
+    for item in json_data:
+        user = XcxyXxt(phone=item["phone"], password=item["password"], fid=fid, refer=refer)
+        user.Login()
+        user.getCourseDate()
+        user.getCourseWork(course_name)
+        user.getWorkView(work_name, "answer.json",batch=True)
+        user.completedWork(work_name=work_name,batch=True)
+        print(f"《《《《《《成功完成了{item['phone']}的作业》》》》》》")
