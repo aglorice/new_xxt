@@ -651,8 +651,11 @@ class XcxyXxt:
             },
         )
         result_view = BeautifulSoup(result.text, "lxml")
-        result_view_soup = result_view.find("span", attrs={"class": "resultNum"})
-        return result_view_soup.text
+        try:
+            result_view_soup = result_view.find("span", attrs={"class": "resultNum"})
+            return result_view_soup.text
+        except Exception as e:
+            return "待批阅"
 
     def completedWork(self, work_name, batch=False):
         if batch:
