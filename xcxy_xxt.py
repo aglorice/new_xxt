@@ -24,6 +24,8 @@ LOGIN_URL = "http://passport2.chaoxing.com/fanyalogin"
 MOOC_URL = "http://i.mooc.chaoxing.com"
 
 
+
+
 class XcxyXxt:
     def __init__(self, phone, password, fid, refer):
         # 加密手机号和密码
@@ -470,7 +472,7 @@ class XcxyXxt:
             if batch == False:
                 exit(0)
             else:
-                return
+                return 0
 
         work_view_html = self.sees.get(
             url=self.baseWorkGetUrl(work_name),
@@ -657,9 +659,7 @@ class XcxyXxt:
         except Exception as e:
             return "待批阅"
 
-    def completedWork(self, work_name, batch=False):
-        if batch:
-            return
+    def completedWork(self, work_name):
         # https://mooc1.chaoxing.com/work/validate?courseId=204924252&classId=73792554&cpi=269513930
         is_commit = "https://mooc1.chaoxing.com/work/validate"
         commit_answer = "https://mooc1.chaoxing.com/work/addStudentWorkNewWeb"
@@ -732,6 +732,8 @@ def batchWork(file, course_name, work_name, fid, refer):
         user.getCourseDate()
         if user.getCourseWork(course_name, batch=True) == 0:
             continue
-        user.getWorkView(work_name, "answer.json", batch=True)
-        user.completedWork(work_name=work_name, batch=True)
+        status = user.getWorkView(work_name, "answer.json", batch=True)
+        if status == 0:
+            continue
+        user.completedWork(work_name=work_name)
         print(f"《《《《《《成功完成了{item['phone']}的作业》》》》》》")
