@@ -642,6 +642,11 @@ class XcxyXxt:
                 from_date_2[key9] = 1
                 key10 = "answer" + item["id"]
                 from_date_2[key10] = item["answer"]
+            elif "其他" in item['title']:
+                key11 = "answertype" + item["id"]
+                from_date_2[key11] = 8
+                key12 = "answer" + item["id"]
+                from_date_2[key12] = item["answer"]
 
         return from_date_2
 
