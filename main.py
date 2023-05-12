@@ -47,7 +47,12 @@ if __name__ == '__main__':
 
     # """批量完成作业"""
     # print("<<<<======================================================>>>>")
-    #
+    # user_1 = XcxyXxt(phone=phone, password=password, fid=fid, refer=refer)
+    # user_1.Login()
+    # user_1.getCourseDate()
+    # user_1.getCourseWork(course_name)
+    # answer = user_1.getWorkAnswer(work_name)
+    # user_1.dateToJsonFile("answer.json", answer)
     # batchWork(work_name=work_name, course_name=course_name, fid=fid, refer=refer, file='user.json')
     #
     # print("<<<<======================================================>>>>")

@@ -24,8 +24,6 @@ LOGIN_URL = "http://passport2.chaoxing.com/fanyalogin"
 MOOC_URL = "http://i.mooc.chaoxing.com"
 
 
-
-
 class XcxyXxt:
     def __init__(self, phone, password, fid, refer):
         # 加密手机号和密码
@@ -53,7 +51,7 @@ class XcxyXxt:
     def decrypto(self, phone, password):
         return encrypto(phone, password)
 
-    def Login(self,batch = False):
+    def Login(self, batch=False):
         # 进入到自己学院的学习通
         self.sees.post(
             url=LOGIN_URL,
@@ -279,7 +277,7 @@ class XcxyXxt:
         print("=======================================")
         self.courses = courses
 
-    def getCourseWork(self, course_name: str, sleep_time=0,batch = False):
+    def getCourseWork(self, course_name: str, sleep_time=0, batch=False):
         """
         获取该课程下的所有作业
         :param sleep_time:
@@ -411,7 +409,7 @@ class XcxyXxt:
                 for _option in option_list:
                     if _option == "\n":
                         continue
-                    option.append(_option.text.replace(" ", ""))
+                    option.append(_option.text.replace(" ", "").replace(" ",''))
             else:
                 option = None
             if title_type == "简答题":
@@ -431,10 +429,15 @@ class XcxyXxt:
                         exit(0)
             if title_type == "多选题":
                 try:
-                    d_answer = _work_answer.find_next("span").find_next("span").contents[1]
+                    d_answer = _work_answer.find_all_next("span", attrs={"class": "colorGreen marginRight40 fl"})[
+                        0].text.replace("正确答案: ", "").replace("\n", "").replace("\r", "").replace("\t", "").replace(" ",
+                                                                                                    "")
                 except Exception as e:
-                    d_answer = _work_answer.find_next("span", attrs={"class": "colorDeep marginRight40 fl"}).contents[1]
-                answer.append(d_answer)
+                    print(f"[error]---发生了错误{e},这道题还没有公布正确答案,正在获取已完成作业的者的答案")
+                    answer = _work_answer.find_all_next("span", attrs={"class": "colorDeep marginRight40 fl"})[
+                        0].text.replace("我的答案: ", "").replace("\n", "").replace("\r", "").replace("\t", "").replace(" ",
+                                                                                                                    "")
+                answer.append(d_answer.replace(" ",''))
             if title_type == "填空题":
                 answer_list = _work_answer.find_all_next("dl", attrs={"class": "mark_fill colorGreen"})[0].find_all(
                     "dd")
@@ -571,9 +574,10 @@ class XcxyXxt:
             if _question['id'] == title_id:
                 if title_type == "选择题" or title_type == "单选题":
                     for item in _question["option"]:
-                        if _question["answer"] in item:
+                        if _question["answer"].replace(" ", "") in item:
                             temp = item
-                    index = self.diffOption(temp, _question["option"])
+
+                    index = self.diffOption(temp, option)
                     answer = option[index].split(".")[0]
                 elif title_type == "多选题":
                     temp = []
@@ -682,7 +686,6 @@ class XcxyXxt:
         )
         if "3" in is_commit_result.text:
             print("[info]---答案提交已经就绪")
-
         from_date_1 = {
             "courseId": self.commit_date_form["courseId"],
             "classId": self.commit_date_form["classId"],
@@ -711,7 +714,6 @@ class XcxyXxt:
             "saveStatus": self.commit_date["saveStatus"],
             "version": self.commit_date["version"],
         }
-
         commit_answer = self.sees.post(
             url=commit_answer,
             params=params,
