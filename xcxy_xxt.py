@@ -432,6 +432,7 @@ class XcxyXxt:
                     d_answer = _work_answer.find_all_next("span", attrs={"class": "colorGreen marginRight40 fl"})[
                         0].text.replace("正确答案: ", "").replace("\n", "").replace("\r", "").replace("\t", "").replace(" ",
                                                                                                     "")
+
                 except Exception as e:
                     print(f"[error]---发生了错误{e},这道题还没有公布正确答案,正在获取已完成作业的者的答案")
                     answer = _work_answer.find_all_next("span", attrs={"class": "colorDeep marginRight40 fl"})[
@@ -563,7 +564,7 @@ class XcxyXxt:
     def diffOption(self, item, options):
         sample = []
         for i in options:
-            sample.append(difflib.SequenceMatcher(None, i, item).quick_ratio())
+            sample.append(difflib.SequenceMatcher(None, i.replace(" ",'').split('.')[1], item.replace(" ",'').split('.')[1]).quick_ratio())
         return sample.index(max(sample))
 
     def findAnswer(self, file, title_id, option, title_type):
@@ -588,13 +589,14 @@ class XcxyXxt:
                             continue
                     for item in temp:
                         index = self.diffOption(item, option)
+                        print(item,option,index)
                         answer = answer + option[index].split(".")[0]
                 else:
                     answer = _question["answer"]
         if answer is None:
             print(f"[error]---请检查答案提供者的答案是否合理")
             exit(0)
-        return answer
+        return "".join(sorted(answer))
 
     def allQuestionId(self):
         """
@@ -702,6 +704,9 @@ class XcxyXxt:
             "mooc2": self.commit_date_form["mooc2"],
             "randomOptions": self.commit_date_form["randomOptions"],
         }
+        if self.commit_date_form["randomOptions"]:
+            print("这道题需要手动完成😭😭😭")
+            exit()
         from_date_2 = self.answerToformDate()
         from_date = dict(from_date_1, **from_date_2)
         params = {
