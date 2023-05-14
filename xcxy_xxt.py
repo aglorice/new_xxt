@@ -721,8 +721,6 @@ class XcxyXxt:
             "saveStatus": self.commit_date["saveStatus"],
             "version": self.commit_date["version"],
         }
-        print(from_date)
-        exit()
         commit_answer = self.sees.post(
             url=commit_answer,
             params=params,
