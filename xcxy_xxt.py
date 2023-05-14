@@ -589,13 +589,13 @@ class XcxyXxt:
                             continue
                     for item in temp:
                         index = self.diffOption(item, option)
-                        print(item,option,index)
                         answer = answer + option[index].split(".")[0]
                 else:
                     answer = _question["answer"]
         if answer is None:
             print(f"[error]---请检查答案提供者的答案是否合理")
             exit(0)
+        # 对答案进行排序
         return "".join(sorted(answer))
 
     def allQuestionId(self):
@@ -704,9 +704,10 @@ class XcxyXxt:
             "mooc2": self.commit_date_form["mooc2"],
             "randomOptions": self.commit_date_form["randomOptions"],
         }
-        if self.commit_date_form["randomOptions"]:
+        if self.commit_date_form["randomOptions"] == "true":
             print("这道题需要手动完成😭😭😭")
             exit()
+
         from_date_2 = self.answerToformDate()
         from_date = dict(from_date_1, **from_date_2)
         params = {
