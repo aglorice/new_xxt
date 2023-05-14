@@ -590,13 +590,14 @@ class XcxyXxt:
                     for item in temp:
                         index = self.diffOption(item, option)
                         answer = answer + option[index].split(".")[0]
+                    answer = "".join(sorted(answer))
                 else:
                     answer = _question["answer"]
         if answer is None:
             print(f"[error]---请检查答案提供者的答案是否合理")
             exit(0)
         # 对答案进行排序
-        return "".join(sorted(answer))
+        return answer
 
     def allQuestionId(self):
         """
@@ -720,6 +721,8 @@ class XcxyXxt:
             "saveStatus": self.commit_date["saveStatus"],
             "version": self.commit_date["version"],
         }
+        print(from_date)
+        exit()
         commit_answer = self.sees.post(
             url=commit_answer,
             params=params,
