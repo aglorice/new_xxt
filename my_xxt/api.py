@@ -115,16 +115,16 @@ class XcxyXxt:
                     "id": str(i),
                     "course_name": self.my_replace(course_div.span.string),
                     "course_url": course_div.a.attrs['href'],
-                    "course_teacher": self.my_replace(course_div.find_next("p").find_next("p")),
-                    "course_class": course_div.find_next("p").find_next("p").find_next("p").string
+                    "course_teacher": self.my_replace(course_div.find_next("p", attrs={"class", "line2 color3"})["title"]),
+                    "course_class": course_div.find_next("p", attrs={"class", "overHidden1"}).text
                 }
             except Exception as e:
                 course_dict = {
                     "id": str(i),
                     "course_name": self.my_replace(course_div.span.string),
                     "course_url": course_div.a.attrs['href'],
-                    "course_teacher": self.my_replace(course_div.find_next("p").find_next("p").string),
-                    "course_class": course_div.find_next("p").find_next("p").find_next("p").string
+                    "course_teacher": "小明",
+                    "course_class": course_div.find_next("p", attrs={"class", "overHidden1"}).text
                 }
             course_list.append(course_dict)
             i = i + 1
