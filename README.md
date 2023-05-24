@@ -102,3 +102,6 @@ python main.py
 
 **最后注意一下，作业还是得自己做，这种行为是不对得😁😁😁**
 
+### Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=aglorice/new_xxt&type=Date)](https://star-history.com/#aglorice/new_xxt&Date)
