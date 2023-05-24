@@ -59,7 +59,7 @@ def select_menu(console: Console, xxt: XcxyXxt) -> None:
             continue
         elif index == "3":
             courses = xxt.getCourse()
-            not_work = get_not_work(courses, xxt, console)
+            not_work = get_not_work(courses, xxt, console, sleep_time=2)
             show_not_work(not_work, console)
             continue
         elif index == "4":
@@ -251,11 +251,11 @@ def del_file(path_data: str):
             del_file(file_data)
 
 
-def get_not_work(courses: list, xxt: XcxyXxt, console: Console) -> list:
+def get_not_work(courses: list, xxt: XcxyXxt, console: Console, sleep_time: float = 1) -> list:
     not_work = []
     for course in courses:
         with console.status(f"[red]Working...[{course['id']}/{len(courses)}]"):
-            time.sleep(1)
+            time.sleep(sleep_time)
             try:
                 works = xxt.getWorks(course["course_url"], course["course_name"])
                 for work in works:
