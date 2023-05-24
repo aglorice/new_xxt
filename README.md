@@ -1,12 +1,13 @@
 <div align="center">
     <h1 align="center">
-     学习通,泛雅，超星 作业一键完成
+     学习通,泛雅，超星 作业一键完成（全新版本✨✨✨）
     </h1>
 <p>平时经常会遇到老师布置学习通上的作业，并且给发布的题和往届的基本一样，或者是已有人已经完成了作业并且做完后就会公布正确答案，只是顺序可能不一样，所以为了更加方便的学习，就有了这个脚本</p>
 </div>
 
 ![GitHub stars](https://img.shields.io/github/stars/aglorice/new_xxt.svg)
-![python](https://img.shields.io/badge/python-3.6-blue)
+![python](https://img.shields.io/badge/python-3.10-blue)
+![version](https://img.shields.io/badge/version-v0.2-blue)
 ![contributors](https://badgen.net/github/contributors/aglorice/new_xxt)
 ![prs](https://badgen.net/github/prs/aglorice/new_xxt)
 
@@ -41,7 +42,7 @@ pip install -r requirements.txt
 ```
 #### 4.运行`main.py`
 ```bash
-python3 main.py
+python main.py
 ```
 #### 注意：如果在运行的时候提示无效参数，直接再次运行一次就可以了。
 
