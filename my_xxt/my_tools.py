@@ -50,24 +50,29 @@ def select_menu(console: Console, xxt: XcxyXxt) -> None:
     while True:
         show_menu(console)
         index = console.input("[yellow]请输入你想选择的功能：")
+        # 查看课程
         if index == "1":
             courses = xxt.getCourse()
             show_course(courses, console)
             continue
+        # 查看所有的答案文件
         elif index == "2":
             show_all_answer_file(console)
             continue
+        # 查看左右为完成的作业
         elif index == "3":
             courses = xxt.getCourse()
             not_work = get_not_work(courses, xxt, console, sleep_time=2)
             show_not_work(not_work, console)
             continue
+        # 清除所有的答案文件
         elif index == "4":
             dirpath = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
             path = os.path.join(dirpath, "answers")
             del_file(path)
             console.print(f"[green]清空完毕")
             continue
+        # 爬取指定课程的指定的作业（已完成）
         elif index == "5":
             courses = xxt.getCourse()
             show_course(courses, console)
@@ -89,6 +94,7 @@ def select_menu(console: Console, xxt: XcxyXxt) -> None:
             dateToJsonFile(answer_list, work)
             console.print(f"[green]爬取成功，答案已经保存至{work['id']}.json")
             continue
+        # 完成指定课程的指定作业（未完成）
         elif index == "6":
             courses = xxt.getCourse()
             show_course(courses, console)
@@ -122,6 +128,7 @@ def select_menu(console: Console, xxt: XcxyXxt) -> None:
             works = xxt.getWorks(course["course_url"], course["course_name"])
             show_works(works, console, xxt)
             continue
+        # 退出登录
         elif index == "7":
             return
         select_error(console)

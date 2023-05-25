@@ -19,6 +19,8 @@ import requests as requests
 from my_xxt.answer_type import AnswerType
 from my_xxt.question_type import QuestionType
 
+
+# 加密密钥
 key = b"u2oh6Vu^HWe4_AES"
 
 # 登录接口（post）
@@ -67,6 +69,12 @@ class XcxyXxt:
                       "Chrome/110.0.0.0 Safari/537.36 Edg/110.0.1587.63 "
 
     def login(self, phone: str, password: str) -> dict:
+        """
+        登录学习通
+        :param phone: 手机号
+        :param password: 密码
+        :return: 登录结果
+        """
         # 开始加密参数
         cryptor = AES.new(key, AES.MODE_CBC, key)
         phone = base64.b64encode(cryptor.encrypt(pad(phone.encode(), 16))).decode()
@@ -91,6 +99,10 @@ class XcxyXxt:
         return resp.json()
 
     def getCourse(self) -> list:
+        """
+        获取所有的课程
+        :return: 所有的课程信息
+        """
         # 所有的课程信息
         course_list = []
         course = self.sees.get(
@@ -119,6 +131,7 @@ class XcxyXxt:
                     "course_class": course_div.find_next("p", attrs={"class", "overHidden1"}).text
                 }
             except Exception as e:
+                # 先写着，万一有啥特殊情况
                 course_dict = {
                     "id": str(i),
                     "course_name": self.my_replace(course_div.span.string),
@@ -131,6 +144,12 @@ class XcxyXxt:
         return course_list
 
     def getWorks(self, course_url: str, course_name: str) -> list:
+        """
+        获取一个课程的作业
+        :param course_url: 课程的url
+        :param course_name: 课程的名称
+        :return:该课程所有的作业
+        """
         works = []
         work_view = self.sees.get(
             url=course_url,
@@ -189,6 +208,11 @@ class XcxyXxt:
         return works
 
     def getWorkScore(self, work_url: str) -> str:
+        """
+        获取一个作业的分数
+        :param work_url: 作业的url
+        :return:
+        """
         result = self.sees.get(
             url=work_url,
             headers={
@@ -203,7 +227,11 @@ class XcxyXxt:
             return str(-1)
 
     def getAnswer(self, work_url: str) -> list:
-
+        """
+        爬取已完成作业的答案
+        :param work_url:
+        :return:
+        """
         work_answer = []
         work_answer_view = self.sees.get(
             url=work_url,
@@ -222,6 +250,11 @@ class XcxyXxt:
         return work_answer
 
     def create_from(self, work_url: str) -> dict:
+        """
+        构造提交作业所需要的数据
+        :param work_url:
+        :return:
+        """
         work_view_html = self.sees.get(
             url=work_url,
             headers={
@@ -264,6 +297,11 @@ class XcxyXxt:
         return commit_date
 
     def commit_before(self, commit_date: dict) -> str:
+        """
+        在作业提交提交之前需要发送一个请求
+        :param commit_date:
+        :return:
+        """
         ret = self.sees.get(
             url=IS_COMMIT,
             params={
@@ -278,6 +316,12 @@ class XcxyXxt:
         return ret.text
 
     def commit_work(self, answer: list, work: dict) -> dict:
+        """
+        提交作业
+        :param answer:
+        :param work:
+        :return:
+        """
         commit_from = self.create_from(work_url=work["work_url"])
         params = self.create_params(commit_from)
         data = self.create_from_data(commit_from, answer)
@@ -293,6 +337,11 @@ class XcxyXxt:
         return ret.json()
 
     def get_question(self, work_url: str) -> list:
+        """
+        获取未完成作业的题目
+        :param work_url:
+        :return:
+        """
         work_question = []
         work_question_view = self.sees.get(
             url=work_url,
@@ -349,6 +398,12 @@ class XcxyXxt:
         return params
 
     def create_from_data(self, commit_from: dict, answer: list) -> dict:
+        """
+        将答案构造成提交所需要的格式
+        :param commit_from:
+        :param answer:
+        :return:
+        """
         commit_from_1 = {
             "courseId": commit_from["courseId"],
             "classId": commit_from["classId"],

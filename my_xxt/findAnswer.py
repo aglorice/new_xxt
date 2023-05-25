@@ -8,6 +8,12 @@ import difflib
 
 
 def match_answer(answer_list: list, question_list: list):
+    """
+    更具问题寻找答案
+    :param answer_list:
+    :param question_list:
+    :return:
+    """
     answer = []
     for question in question_list:
         for item in answer_list:
@@ -26,6 +32,13 @@ def match_answer(answer_list: list, question_list: list):
 
 
 def find_answer(question_option: list, answer_option: list, answer):
+    """
+    选择题匹配答案
+    :param question_option:
+    :param answer_option:
+    :param answer:
+    :return:
+    """
     # 多选题
     if type(answer) == list:
         temp = []
@@ -51,6 +64,12 @@ def find_answer(question_option: list, answer_option: list, answer):
 
 
 def diffOption(item, options):
+    """
+    使用相似度来匹配对应的选项
+    :param item:
+    :param options:
+    :return:
+    """
     sample = []
     for i in options:
         temp = i.split(" ")[0]
