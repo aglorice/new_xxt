@@ -78,7 +78,7 @@ def select_menu(console: Console, xxt: XcxyXxt) -> None:
             show_course(courses, console)
             course = select_course(console, courses)
             works = xxt.getWorks(course["course_url"], course["course_name"])
-            show_works(works, console, xxt)
+            show_works(works, console)
 
             # 爬取答案
             work = select_work(console, works)
@@ -100,7 +100,7 @@ def select_menu(console: Console, xxt: XcxyXxt) -> None:
             show_course(courses, console)
             course = select_course(console, courses)
             works = xxt.getWorks(course["course_url"], course["course_name"])
-            show_works(works, console, xxt)
+            show_works(works, console)
 
             # 完成作业
             work = select_work(console, works)
@@ -126,7 +126,7 @@ def select_menu(console: Console, xxt: XcxyXxt) -> None:
             ret = xxt.commit_work(answer, work)
             console.print(ret)
             works = xxt.getWorks(course["course_url"], course["course_name"])
-            show_works(works, console, xxt)
+            show_works(works, console)
             continue
         # 退出登录
         elif index == "7":
@@ -163,15 +163,15 @@ def show_menu(console: Console) -> None:
     console.rule(characters="+")
 
 
-def show_works(works: list, console: Console, xxt: XcxyXxt) -> None:
-    tb = Table("id", "作业名称", "作业状态", "分数", border_style="blue")
+def show_works(works: list, console: Console) -> None:
+    tb = Table("id", "作业名称", "作业状态", "分数", "是否可以重做", border_style="blue")
     for work in works:
-        work_score = xxt.getWorkScore(work["work_url"]) if (work["work_status"] == "已完成") else "无"
         tb.add_row(
             f"[green]{work['work_id']}",
             work['work_name'],
             work["work_status"],
-            work_score,
+            work["score"],
+            work["isRedo"]
         )
     console.rule("[blue]作业信息", characters="*")
     console.print(tb)

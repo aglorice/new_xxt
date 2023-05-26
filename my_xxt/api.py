@@ -127,7 +127,8 @@ class XcxyXxt:
                     "id": str(i),
                     "course_name": self.my_replace(course_div.span.string),
                     "course_url": course_div.a.attrs['href'],
-                    "course_teacher": self.my_replace(course_div.find_next("p", attrs={"class", "line2 color3"})["title"]),
+                    "course_teacher": self.my_replace(
+                        course_div.find_next("p", attrs={"class", "line2 color3"})["title"]),
                     "course_class": course_div.find_next("p", attrs={"class", "overHidden1"}).text
                 }
             except Exception as e:
@@ -201,7 +202,9 @@ class XcxyXxt:
                 "work_name": work.find_next('p').string,
                 "work_status": work.find_next("p").find_next("p").string,
                 "work_url": work.attrs['data'],
-                "course_name": course_name
+                "course_name": course_name,
+                "isRedo": self.getIsRedo(work.attrs['data']),
+                "score": self.getWorkScore(work.attrs['data'])
             }
             i = i + 1
             works.append(_work)
@@ -219,12 +222,37 @@ class XcxyXxt:
                 "User-Agent": self.header,
             },
         )
+        result_view = BeautifulSoup(result.text, "lxml")
         try:
-            result_view = BeautifulSoup(result.text, "lxml")
             result_view_soup = result_view.find("span", attrs={"class": "resultNum"})
             return result_view_soup.text
         except Exception as e:
-            return str(-1)
+            try:
+                result_view_soup = result_view.find("p", attrs={"class": "Finalresult"})
+                result_view_soup = result_view_soup.find("span")
+                return result_view_soup.text
+            except Exception as e:
+                return "无"
+
+    def getIsRedo(self, work_url: str) -> str:
+        """
+        获取作业重做状态
+        :param work_url:
+        :return:
+        """
+        result = self.sees.get(
+            url=work_url,
+            headers={
+                "User-Agent": self.header,
+            },
+        )
+        try:
+            result_view = BeautifulSoup(result.text, "lxml")
+            result_view_soup = result_view.find("a", attrs={"class": "redo"})
+            if "重做" in result_view_soup:
+                return "yes"
+        except Exception as e:
+            return "no"
 
     def getAnswer(self, work_url: str) -> list:
         """
@@ -336,9 +364,10 @@ class XcxyXxt:
         )
         return ret.json()
 
-    def get_question(self, work_url: str) -> list:
+    def get_question(self, work_url: str, params=None) -> list:
         """
         获取未完成作业的题目
+        :param params:
         :param work_url:
         :return:
         """
@@ -348,6 +377,7 @@ class XcxyXxt:
             headers={
                 "User-Agent": self.header,
             },
+            params=params,
         )
         work_view_soup = BeautifulSoup(work_question_view.text, "lxml")
         work_view = work_view_soup.find_all("div", attrs={"class": "padBom50 questionLi"})
