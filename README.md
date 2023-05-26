@@ -2,7 +2,7 @@
     <h1 align="center">
      学习通,泛雅，超星 作业一键完成（全新版本✨✨✨）
     </h1>
-<p>该脚本仅用于爬虫技术的学习，如果你有好的功能，欢迎提交<a href=""></a></p>
+<p>该脚本仅用于爬虫技术的学习，如果你有好的功能或者想法，欢迎提交pr<a href=""></a></p>
 </div>
 
 ![GitHub stars](https://img.shields.io/github/stars/aglorice/new_xxt.svg)
