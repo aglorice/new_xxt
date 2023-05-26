@@ -7,7 +7,7 @@
 
 ![GitHub stars](https://img.shields.io/github/stars/aglorice/new_xxt.svg)
 ![python](https://img.shields.io/badge/python-3.10-blue)
-![version](https://img.shields.io/badge/version-v0.2-blue)
+![version](https://img.shields.io/badge/version-v0.2.1-blue)
 ![contributors](https://badgen.net/github/contributors/aglorice/new_xxt)
 ![prs](https://badgen.net/github/prs/aglorice/new_xxt)
 
@@ -61,7 +61,7 @@ pip install -r requirements.txt
 ```bash
 python main.py
 ```
-#### 注意：如果在运行的时候提示无效参数，直接再次运行一次就可以了。
+#### 注意：如果在运行的时候提示无效参数，直接再次运行一次就可以了。对于需要重做的作业，你可以先在手机或电脑上点击重做，然后再回到该脚本，作业会显示未交的状态，这个时候就可以使用脚本正常运行。
 
 `answers/27835863.json`
 ```json
