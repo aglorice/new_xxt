@@ -46,7 +46,7 @@
 ## 3️⃣使用方法
 #### 1.克隆到本地
 ```bash
-https://github.com/aglorice/new_xxt.git
+git clone https://github.com/aglorice/new_xxt.git
 ```
 
 #### 2.进入目录
