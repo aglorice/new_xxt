@@ -19,7 +19,6 @@ import requests as requests
 from my_xxt.answer_type import AnswerType
 from my_xxt.question_type import QuestionType
 
-
 # 加密密钥
 key = b"u2oh6Vu^HWe4_AES"
 
@@ -37,6 +36,9 @@ COMMIT_WORK = "https://mooc1.chaoxing.com/work/addStudentWorkNewWeb"
 
 # 确认提交（get）
 IS_COMMIT = "https://mooc1.chaoxing.com/work/validate"
+
+# 获取个人信息(get)
+SELF_INFO = "http://passport2.chaoxing.com/mooc/accountManage"
 
 # 答案题目类型
 answer_type = [
@@ -143,6 +145,21 @@ class XcxyXxt:
             course_list.append(course_dict)
             i = i + 1
         return course_list
+
+    def getInfo(self) -> dict:
+        info_html = self.sees.get(
+            url=SELF_INFO,
+            headers={
+                "User-Agent": self.header,
+            },
+        )
+        info_html_soup = BeautifulSoup(info_html.text, "lxml")
+        info_html_soup = info_html_soup.find("div", attrs={"class": "infoDiv"})
+        info = {
+            "name": info_html_soup.find("span", attrs={"id": "messageName"})["value"],
+            "student_number": info_html_soup.find("p", attrs={"class": "xuehao"}).text.replace("学号/工号:", "")
+        }
+        return info
 
     def getWorks(self, course_url: str, course_name: str) -> list:
         """

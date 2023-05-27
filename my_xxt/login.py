@@ -19,5 +19,6 @@ def login(console: Console, xxt: XcxyXxt) -> None:
             if flag == 'q':
                 exit()
         else:
-            console.print("[green]登录成功")
+            info = xxt.getInfo()
+            console.print(f"[green]登录成功,{info['name']}")
             break
