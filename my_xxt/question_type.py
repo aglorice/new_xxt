@@ -19,6 +19,7 @@ class QuestionType:
         question = {
             "id": item.attrs['data'],
             "title": my_replace(title),
+            "type": "单选题",
             "option": option,
             "answer": None
         }
@@ -35,6 +36,7 @@ class QuestionType:
         question = {
             "id": item.attrs['data'],
             "title": my_replace(title),
+            "type": "多选题",
             "option": option,
             "answer": None
         }

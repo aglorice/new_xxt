@@ -289,6 +289,7 @@ class XcxyXxt:
         _answer_type = AnswerType()
         for item in work_view:
             title_type = item.find_next("span").string.split(",")[0].replace("(", "").replace(")", "")
+            # 根据选项去自动调用对应的方法来解析数据
             func_name = self.selectFunc(title_type, answer_type)
             func = getattr(_answer_type, func_name)
             work_answer.append(func(item))

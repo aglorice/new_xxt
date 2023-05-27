@@ -11,8 +11,10 @@ class AnswerType:
     @staticmethod
     def multipleChoice(item: bs4.element.Tag) -> dict:
         option = []
-        option_list = item.find_all_next("li")[0:4]
+        option_list = item.find_all_next("ul")[0]
         for _option in option_list:
+            if _option == "\n":
+                continue
             option.append(my_replace(_option.text))
         answer = getAnswer(item)
         title = item.find_all("h3", attrs={"class": "mark_name colorDeep"})[0].text
