@@ -1,10 +1,9 @@
 from rich.console import Console
-
-
 from my_xxt.my_tools import select_menu, show_start
 from my_xxt.api import XcxyXxt
 from my_xxt.login import login
 
+# 设置控制台的宽度
 console = Console(width=100)
 
 if __name__ == '__main__':

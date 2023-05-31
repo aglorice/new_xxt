@@ -136,7 +136,14 @@ def select_menu(console: Console, xxt: XcxyXxt) -> None:
 
 def show_start(console: Console) -> None:
     console.rule("欢迎使用该做题脚本")
-    console.print("[red]注意：该脚本仅供学习参考")
+    console.print("    ███╗   ██╗███████╗██╗    ██╗        ██╗  ██╗██╗  ██╗████████╗\n \
+   ████╗  ██║██╔════╝██║    ██║        ╚██╗██╔╝╚██╗██╔╝╚══██╔══╝\n \
+ ██╔██╗ ██║█████╗  ██║ █╗ ██║         ╚███╔╝  ╚███╔╝    ██║\n\
+  ██║╚██╗██║██╔══╝  ██║███╗██║         ██╔██╗  ██╔██╗    ██║\n\
+  ██║ ╚████║███████╗╚███╔███╔╝███████╗██╔╝ ██╗██╔╝ ██╗   ██║\n\
+  ╚═╝  ╚═══╝╚══════╝ ╚══╝╚══╝ ╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝  ",justify="center")
+
+    console.print("[red]注意：该脚本仅供学习参考,详细信息请参考https://github.com/aglorice/new_xxt")
 
 
 def show_course(courses: list, console: Console) -> None:
