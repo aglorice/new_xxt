@@ -6,7 +6,9 @@
 # @File :  api.py
 import base64
 import re
+import secrets
 import time
+import random
 from urllib import parse
 from urllib.parse import urlparse
 
@@ -40,6 +42,14 @@ IS_COMMIT = "https://mooc1.chaoxing.com/work/validate"
 # 获取个人信息(get)
 SELF_INFO = "http://passport2.chaoxing.com/mooc/accountManage"
 
+# 获取二维码图片（get）
+GET_LOGIN_QR = "https://passport2.chaoxing.com/createqr"
+
+# 判断是否二维码登录成功(post)
+IS_QR_LOGIN = "https://passport2.chaoxing.com/getauthstatus"
+# 登录页面首页（get）
+HOME_LOGIN = "https://passport2.chaoxing.com/login"
+
 # 答案题目类型
 answer_type = [
     {"type": "单选题", "fun": "multipleChoice", "key": "0"},
@@ -65,10 +75,38 @@ question_type = [
 class XcxyXxt:
     def __init__(self):
         # 创建一个会话实例
+        self.qr_enc = None
+        self.qr_uuid = None
         self.sees = requests.session()
 
         self.header = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) " \
                       "Chrome/110.0.0.0 Safari/537.36 Edg/110.0.1587.63 "
+
+    def qr_get(self) -> None:
+        """获取二维码登录key"""
+        self.sees.cookies.clear()
+        resp = self.sees.get(
+            HOME_LOGIN, headers={"User-Agent": self.get_ua("web")}  # 这里不可以用移动端 UA 否则鉴权失败
+        )
+        resp.raise_for_status()
+        html = BeautifulSoup(resp.text, "lxml")
+        self.qr_uuid = html.find("input", id="uuid")["value"]
+        self.qr_enc = html.find("input", id="enc")["value"]
+
+        # 激活qr但忽略返回的图片bin
+        resp = self.sees.get(GET_LOGIN_QR, params={"uuid": self.qr_uuid, "fid": -1})
+        resp.raise_for_status()
+
+    def qr_geturl(self) -> str:
+        "合成二维码内容url"
+        return f"https://passport2.chaoxing.com/toauthlogin?uuid={self.qr_uuid}&enc={self.qr_enc}&xxtrefer=&clientid=&type=0&mobiletip="
+
+    def login_qr(self) -> dict:
+        "使用二维码登录"
+        resp = self.sees.post(IS_QR_LOGIN, data={"enc": self.qr_enc, "uuid": self.qr_uuid})
+        resp.raise_for_status()
+        content_json = resp.json()
+        return content_json
 
     def login(self, phone: str, password: str) -> dict:
         """
@@ -444,6 +482,17 @@ class XcxyXxt:
             "version": commit_from["version"],
         }
         return params
+
+    @staticmethod
+    def get_ua(ua_type: str) -> str:
+        """获取UA"""
+        match ua_type:
+            case "mobile":
+                return f"Dalvik/2.1.0 (Linux; U; Android {random.randint(9, 12)}; MI{random.randint(10, 12)} Build/SKQ1.210216.001) (device:MI{random.randint(10, 12)}) Language/zh_CN com.chaoxing.mobile/ChaoXingStudy_3_5.1.4_android_phone_614_74 (@Kalimdor)_{secrets.token_hex(16)}"
+            case "web":
+                return "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36 Edg/107.0.1418.35"
+            case _:
+                raise NotImplementedError
 
     def create_from_data(self, commit_from: dict, answer: list) -> dict:
         """
