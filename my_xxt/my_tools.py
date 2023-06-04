@@ -14,7 +14,7 @@ from rich.console import Console
 from rich.table import Table
 
 from my_xxt.findAnswer import match_answer
-from my_xxt.api import XcxyXxt
+from my_xxt.api import NewXxt
 
 
 def select_error(console: Console):
@@ -44,7 +44,7 @@ def select_work(console: Console, works: list) -> dict:
         select_error(console)
 
 
-def select_menu(console: Console, xxt: XcxyXxt) -> None:
+def select_menu(console: Console, xxt: NewXxt) -> None:
     while True:
         show_menu(console)
         index = console.input("[yellow]请输入你想选择的功能：")
@@ -222,8 +222,8 @@ def jsonFileToDate(file: str) -> dict:
 def show_all_answer_file(console: Console) -> None:
     answer_files = []
     answer_file_info = []
-    dirpath = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
-    path = os.path.join(dirpath, "answers")
+    dir_path = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
+    path = os.path.join(dir_path, "answers")
     for root, dirs, files in os.walk(path):
         answer_files.append(files)
     for item in answer_files[0]:
@@ -244,8 +244,8 @@ def show_all_answer_file(console: Console) -> None:
 
 def is_exist_answer_file(work_file_name: str) -> bool:
     answer_files = []
-    dirpath = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
-    path = os.path.join(dirpath, "answers")
+    dir_path = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
+    path = os.path.join(dir_path, "answers")
     for root, dirs, files in os.walk(path):
         answer_files.append(files)
     if work_file_name in answer_files[0]:
@@ -263,7 +263,7 @@ def del_file(path_data: str):
             del_file(file_data)
 
 
-def get_not_work(courses: list, xxt: XcxyXxt, console: Console, sleep_time: float = 1) -> list:
+def get_not_work(courses: list, xxt: NewXxt, console: Console, sleep_time: float = 1) -> list:
     not_work = []
     for course in courses:
         with console.status(f"[red]正在查找《{course['course_name']}》...[{course['id']}/{len(courses)}]"):

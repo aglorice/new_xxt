@@ -47,6 +47,7 @@ GET_LOGIN_QR = "https://passport2.chaoxing.com/createqr"
 
 # 判断是否二维码登录成功(post)
 IS_QR_LOGIN = "https://passport2.chaoxing.com/getauthstatus"
+
 # 登录页面首页（get）
 HOME_LOGIN = "https://passport2.chaoxing.com/login"
 
@@ -72,7 +73,7 @@ question_type = [
 ]
 
 
-class XcxyXxt:
+class NewXxt:
     def __init__(self):
         # 创建一个会话实例
         self.qr_enc = None

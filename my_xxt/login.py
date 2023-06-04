@@ -9,11 +9,11 @@ import time
 from qrcode import QRCode
 from rich.console import Console
 
-from my_xxt.api import XcxyXxt
+from my_xxt.api import NewXxt
 from my_xxt.my_tools import select_error
 
 
-def login(console: Console, xxt: XcxyXxt) -> None:
+def login(console: Console, xxt: NewXxt) -> None:
     while True:
         choose = select_login(console)
         if choose == "1":
@@ -37,7 +37,7 @@ def select_login(console: Console):
     return choose
 
 
-def phone_login(console: Console, xxt: XcxyXxt):
+def phone_login(console: Console, xxt: NewXxt):
     while True:
         phone = console.input("[yellow]请输入手机号:")
         password = console.input("[yellow]请输入密码:")
@@ -52,7 +52,7 @@ def phone_login(console: Console, xxt: XcxyXxt):
             return True
 
 
-def qr_login(console: Console, xxt: XcxyXxt):
+def qr_login(console: Console, xxt: NewXxt):
     xxt.qr_get()
     qr = QRCode()
     qr.add_data(xxt.qr_geturl())
