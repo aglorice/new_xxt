@@ -14,6 +14,7 @@ from rich.console import Console
 from rich.table import Table
 
 from my_xxt.findAnswer import match_answer
+from my_xxt.api import XcxyXxt
 
 
 def select_error(console: Console):
@@ -41,9 +42,6 @@ def select_work(console: Console, works: list) -> dict:
             if item["work_id"] == index:
                 return item
         select_error(console)
-
-
-from my_xxt.api import XcxyXxt
 
 
 def select_menu(console: Console, xxt: XcxyXxt) -> None:
@@ -141,7 +139,7 @@ def show_start(console: Console) -> None:
  ██╔██╗ ██║█████╗  ██║ █╗ ██║         ╚███╔╝  ╚███╔╝    ██║\n\
   ██║╚██╗██║██╔══╝  ██║███╗██║         ██╔██╗  ██╔██╗    ██║\n\
   ██║ ╚████║███████╗╚███╔███╔╝███████╗██╔╝ ██╗██╔╝ ██╗   ██║\n\
-  ╚═╝  ╚═══╝╚══════╝ ╚══╝╚══╝ ╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝  ",justify="center")
+  ╚═╝  ╚═══╝╚══════╝ ╚══╝╚══╝ ╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝  ", justify="center")
 
     console.print("[red]注意：该脚本仅供学习参考,详细信息请参考https://github.com/aglorice/new_xxt")
 
@@ -268,7 +266,7 @@ def del_file(path_data: str):
 def get_not_work(courses: list, xxt: XcxyXxt, console: Console, sleep_time: float = 1) -> list:
     not_work = []
     for course in courses:
-        with console.status(f"[red]Working...[{course['id']}/{len(courses)}]"):
+        with console.status(f"[red]正在查找《{course['course_name']}》...[{course['id']}/{len(courses)}]"):
             time.sleep(sleep_time)
             try:
                 works = xxt.getWorks(course["course_url"], course["course_name"])

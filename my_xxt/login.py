@@ -30,8 +30,8 @@ def login(console: Console, xxt: XcxyXxt) -> None:
 
 def select_login(console: Console):
     console.rule("登录方式")
-    console.print("1.手机号密码登录")
-    console.print("2.扫码登录")
+    console.print("1.手机号密码登录", highlight=True, justify="center")
+    console.print("2.扫码登录", highlight=True, justify="center")
     console.rule("")
     choose = console.input("请选择你要登录的方式:")
     return choose

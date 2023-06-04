@@ -98,11 +98,11 @@ class XcxyXxt:
         resp.raise_for_status()
 
     def qr_geturl(self) -> str:
-        "合成二维码内容url"
+        """合成二维码内容url"""
         return f"https://passport2.chaoxing.com/toauthlogin?uuid={self.qr_uuid}&enc={self.qr_enc}&xxtrefer=&clientid=&type=0&mobiletip="
 
     def login_qr(self) -> dict:
-        "使用二维码登录"
+        """使用二维码登录"""
         resp = self.sees.post(IS_QR_LOGIN, data={"enc": self.qr_enc, "uuid": self.qr_uuid})
         resp.raise_for_status()
         content_json = resp.json()
