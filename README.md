@@ -7,7 +7,7 @@
 
 ![GitHub stars](https://img.shields.io/github/stars/aglorice/new_xxt.svg)
 ![python](https://img.shields.io/badge/python-3.10-blue)
-![version](https://img.shields.io/badge/version-v0.3.1-blue)
+![version](https://img.shields.io/badge/version-v0.3.2-blue)
 ![contributors](https://badgen.net/github/contributors/aglorice/new_xxt)
 ![prs](https://badgen.net/github/prs/aglorice/new_xxt)
 
@@ -117,7 +117,11 @@ python main.py
 ```
 
 终端运行结果:
-![](img/uTools_1684916919281.png)
+![](img/img.png)
+### 选择功能
+![](img/img_1.png)
+### 批量完成作业
+![](img/img_2.png)
 ## 4️⃣注意事项
 - 仓库发布的`new_xxt`项目中涉及的任何脚本，仅用于测试和学习研究，禁止用于商业用途，不能保证其合法性，准确性，完整性和有效性，请根据情况自行判断。
 - 本项目遵循GPL-3.0 License协议，如果本特别声明与GPL-3.0 License协议有冲突之处，以本特别声明为准。
