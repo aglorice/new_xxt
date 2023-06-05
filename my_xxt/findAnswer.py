@@ -19,7 +19,7 @@ def match_answer(answer_list: list, question_list: list):
         for item in answer_list:
             if question["id"] == item["id"]:
                 if question["type"] == "单选题" or question["type"] == "多选题":
-                    answer_str = find_answer(question["option"], item["option"], item["answer"])
+                    answer_str = find_answer(question["option"], item["option"], item["answer"], question["type"])
                 else:
                     answer_str = item['answer']
                 answer.append({
@@ -31,16 +31,17 @@ def match_answer(answer_list: list, question_list: list):
     return answer
 
 
-def find_answer(question_option: list, answer_option: list, answer):
+def find_answer(question_option: list, answer_option: list, answer,answer_type:str):
     """
     选择题匹配答案
+    :param answer_type:
     :param question_option:
     :param answer_option:
     :param answer:
     :return:
     """
     # 多选题
-    if type(answer) == list:
+    if answer_type == "多选题":
         temp = []
         my_answer = ""
         for item in answer_option:
@@ -51,7 +52,7 @@ def find_answer(question_option: list, answer_option: list, answer):
             index = diffOption(item, question_option)
             my_answer = my_answer + question_option[index].split(".")[0]
         my_answer = "".join(sorted(my_answer))
-    elif type(answer) == str:
+    elif answer_type == "单选题":
         temp = ""
         for item in answer_option:
             if item.split(".")[0] == answer:
