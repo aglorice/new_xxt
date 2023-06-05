@@ -4,13 +4,15 @@
 # @Email  :401208941@qq.com
 # @PROJECT_NAME :xxt_cli
 # @File :  login.py
+import os
 import time
 
 from qrcode import QRCode
 from rich.console import Console
+from rich.table import Table
 
 from my_xxt.api import NewXxt
-from my_xxt.my_tools import select_error
+from my_xxt.my_tools import select_error, jsonFileToDate
 
 
 def login(console: Console, xxt: NewXxt) -> None:
@@ -24,6 +26,20 @@ def login(console: Console, xxt: NewXxt) -> None:
             ret = qr_login(console, xxt)
             if ret:
                 break
+        elif choose == "3":
+            dir_path = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
+            path = os.path.join(dir_path, "user.json")
+            ret = jsonFileToDate(path)
+            user = select_users(ret,console)
+            login_status = xxt.login(user["phone"], user["password"])
+            if not login_status["status"]:
+                flag = console.input("[green]登录失败,请重新尝试！(按q退出,按任意键继续):")
+                if flag == 'q':
+                    exit()
+            else:
+                info = xxt.getInfo()
+                console.print(f"[green]登录成功,{info['name']}")
+                break
         else:
             select_error(console)
 
@@ -32,6 +48,7 @@ def select_login(console: Console):
     console.rule("登录方式")
     console.print("1.手机号密码登录", highlight=True, justify="center")
     console.print("2.扫码登录", highlight=True, justify="center")
+    console.print("3.查看当前所有账号（选择其中的一个登录）", highlight=True, justify="center")
     console.rule("")
     choose = console.input("请选择你要登录的方式:")
     return choose
@@ -43,7 +60,7 @@ def phone_login(console: Console, xxt: NewXxt):
         password = console.input("[yellow]请输入密码:")
         login_status = xxt.login(phone, password)
         if not login_status["status"]:
-            flag = console.input("[green]登录失败,请重新尝试！(按q退出,按任意键继续)")
+            flag = console.input("[green]登录失败,请重新尝试！(按q退出,按任意键继续):")
             if flag == 'q':
                 exit()
         else:
@@ -79,3 +96,25 @@ def qr_login(console: Console, xxt: NewXxt):
                     )
                 flag_scan = True
         time.sleep(1.0)
+
+
+def select_users(users: dict,console:Console):
+    tb = Table("序号", "账号", "密码","姓名", border_style="blue")
+    i = 0
+    for user in users["users"]:
+        tb.add_row(
+            f"[green]{i+1}",
+            user["phone"],
+            user["password"],
+            user["name"],
+        )
+        i = i+1
+    console.rule("[blue]用户表", characters="*")
+    console.print(tb)
+    while True:
+        user_id = int(console.input("[yellow]请选择你要登录的账号:"))
+        try:
+            return users["users"][user_id-1]
+        except Exception as e:
+            select_error(console)
+

@@ -44,6 +44,24 @@ def select_work(console: Console, works: list) -> dict:
         select_error(console)
 
 
+def select_works(console: Console, works: list) -> list:
+    works_list = []
+    if not len(works):
+        return []
+    while True:
+        index = console.input("[yellow]请输入作业答案的id(如果是爬取多个作业，序号按照（1，2，3）英文逗号)：")
+        index = index.replace(" ", "")
+        index_list = index.split(",")
+
+        for item in works:
+            for choose in index_list:
+                if item["work_id"] == choose:
+                    works_list.append(item)
+        if len(works_list):
+            return works_list
+        select_error(console)
+
+
 def select_menu(console: Console, xxt: NewXxt) -> None:
     while True:
         show_menu(console)
@@ -92,8 +110,38 @@ def select_menu(console: Console, xxt: NewXxt) -> None:
             dateToJsonFile(answer_list, work)
             console.print(f"[green]爬取成功，答案已经保存至{work['id']}.json")
             continue
-        # 完成指定课程的指定作业（未完成）
+        # 批量导出指定课程的作业
         elif index == "6":
+            courses = xxt.getCourse()
+            show_course(courses, console)
+            course = select_course(console, courses)
+            works = xxt.getWorks(course["course_url"], course["course_name"])
+            show_works(works, console)
+
+            # 爬取答案
+            works = select_works(console, works)
+            if works == []:
+                console.print("[red]该课程下没有作业")
+                continue
+            i = 0
+            for work in works:
+                with console.status(f"[red]正在查找《{work['work_name']}》...[{i + 1}/{len(works)}]"):
+                    i = i + 1
+                    try:
+                        if work["work_status"] == "已完成":
+                            answer_list = xxt.getAnswer(work["work_url"])
+                        else:
+                            console.print("[red]该作业似乎没有完成")
+                            continue
+                        # 保存答案至answer文件
+                        dateToJsonFile(answer_list, work)
+                        continue
+                    except Exception as e:
+                        console.print("[red]出现了一点小意外", e)
+            console.log("[green]爬取成功")
+            continue
+        # 完成指定课程的指定作业（未完成）
+        elif index == "7":
             courses = xxt.getCourse()
             show_course(courses, console)
             course = select_course(console, courses)
@@ -114,8 +162,8 @@ def select_menu(console: Console, xxt: NewXxt) -> None:
                 console.print("[green]没有在答案文件中匹配到对应的答案文件")
                 continue
             else:
-                dirpath = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
-                path = os.path.join(dirpath, "answers", f"{work['id']}.json")
+                dir_path = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
+                path = os.path.join(dir_path, "answers", f"{work['id']}.json")
                 answer = match_answer(jsonFileToDate(path)[work["id"]], questions)
                 show_answer(answer_list=answer, console=console)
             choose = console.input("[yellow]是否继续进行提交：（yes/no）")
@@ -126,10 +174,90 @@ def select_menu(console: Console, xxt: NewXxt) -> None:
             works = xxt.getWorks(course["course_url"], course["course_name"])
             show_works(works, console)
             continue
+        # 批量完成作业
+        elif index == "8":
+            courses = xxt.getCourse()
+            show_course(courses, console)
+            course = select_course(console, courses)
+            works = xxt.getWorks(course["course_url"], course["course_name"])
+            show_works(works, console)
+
+            work = select_work(console, works)
+            dir_path = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
+            path = os.path.join(dir_path, "user.json")
+            users = jsonFileToDate(path)
+            show_users(users, console)
+
+            users_select = select_users(users, console)
+            i = 0
+            success_count = 0
+            fail_count = 0
+            for user in users_select:
+                i = i+1
+                login_status = xxt.login(user["phone"], user["password"])
+
+                # 判断登录成功与否
+                if login_status["status"] == True:
+                    courses = xxt.getCourse()
+                    course = find_course(courses, work["courseId"])
+                    works = xxt.getWorks(course["course_url"], course["course_name"])
+                    work = find_work(works, work["work_id"])
+                    # 判断是否存在作业或者课程
+                    if course == {} or work == {}:
+                        console.print(f"({i})  [green]{user['name']}---该用户的作业操作失败[red]该账号不存在该课程或者作业")
+                        fail_count = fail_count + 1
+                    else:
+                        # 判断作业是什么状态
+                        if work["work_status"] == "已完成":
+                            console.print(f"({i})  [green]{user['name']}---该用户的作业操作失败[red]该账号已完成该作业")
+                            fail_count = fail_count + 1
+                            continue
+                        else:
+                            questions = xxt.get_question(work["work_url"])
+                        # 判断是否存在答案文件
+                        if not is_exist_answer_file(f"{work['id']}.json"):
+                            console.print(f"({i})  [green]{user['name']}---该用户的作业操作失败[red]没有在答案文件中匹配到对应的答案文件")
+                            fail_count = fail_count + 1
+                            continue
+                        else:
+                            dir_path = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
+                            path = os.path.join(dir_path, "answers", f"{work['id']}.json")
+                            answer = match_answer(jsonFileToDate(path)[work["id"]], questions)
+                            ret = xxt.commit_work(answer, work)
+                            # 作业提交成功
+                            if ret["msg"] == 'success!':
+                                works = xxt.getWorks(course["course_url"], course["course_name"])
+                                work = find_work(works, work["work_id"])
+                                console.print(f"({i})  [green]{user['name']}---该用户的作业操作成功[blue]最终分数为{work['score']}")
+                                success_count = success_count + 1
+                            else:
+                                console.print(f"({i})  [green]{user['name']}---该用户的作业操作失败 {ret}")
+                                fail_count = fail_count + 1
+                                continue
+                else:
+                    console.print(f"({i})  [green]{user['name']}---该用户的作业操作失败[red]账号或者密码错误")
+                    fail_count = fail_count + 1
+            console.log(f"[yellow]一共成功{success_count},失败数为{fail_count}")
+            continue
         # 退出登录
-        elif index == "7":
+        elif index == "9":
             return
         select_error(console)
+
+
+def find_course(courses: list, course_id: str) -> dict:
+    for course in courses:
+        # url 里面有course_id
+        if course_id in course["course_url"]:
+            return course
+    return {}
+
+
+def find_work(works: list, work_id: str) -> dict:
+    for work in works:
+        if work["work_id"] == work_id:
+            return work
+    return {}
 
 
 def show_start(console: Console) -> None:
@@ -144,6 +272,21 @@ def show_start(console: Console) -> None:
     console.print("[red]注意：该脚本仅供学习参考,详细信息请参考https://github.com/aglorice/new_xxt")
 
 
+def show_users(users: dict, console: Console) -> None:
+    tb = Table("序号", "账号", "密码", "姓名", border_style="blue")
+    i = 0
+    for user in users["users"]:
+        tb.add_row(
+            f"[green]{i + 1}",
+            user["phone"],
+            user["password"],
+            user["name"],
+        )
+        i = i + 1
+    console.rule("[blue]用户表", characters="*")
+    console.print(tb)
+
+
 def show_course(courses: list, console: Console) -> None:
     tb = Table("序号", "课程名", "老师名", border_style="blue")
     for course in courses:
@@ -156,6 +299,19 @@ def show_course(courses: list, console: Console) -> None:
     console.print(tb)
 
 
+def select_users(users: dict, console: Console) -> list:
+    user_list = []
+    users_id = console.input("[yellow]请选择你要完成此作业的账号 如(1,2,3) 英文逗号:")
+    users_id = users_id.replace(" ", "")
+    users_id_list = users_id.split(",")
+    try:
+        for user in users_id_list:
+            user_list.append(users["users"][int(user) - 1])
+        return user_list
+    except Exception as e:
+        select_error(console)
+
+
 def show_menu(console: Console) -> None:
     console.rule("[green]菜单", characters="+")
     console.print("1.查看课程", highlight=True)
@@ -163,8 +319,10 @@ def show_menu(console: Console) -> None:
     console.print("3.查询所有未完成的作业", highlight=True)
     console.print("4.清除所有答案文件", highlight=True)
     console.print("5.爬取指定作业的答案", highlight=True)
-    console.print("6.完成作业（请先确认是否已经爬取了你想要完成作业的答案）", highlight=True)
-    console.print("7.退出登录", highlight=True)
+    console.print("6.批量爬取指定课程的答案", highlight=True)
+    console.print("7.完成作业（请先确认是否已经爬取了你想要完成作业的答案）", highlight=True)
+    console.print("8.批量完成作业完成作业（请先确认是否已经爬取了你想要完成作业的答案，请填好user.json里的账号数据）", highlight=True)
+    console.print("9.退出登录", highlight=True)
     console.rule(characters="+")
 
 
