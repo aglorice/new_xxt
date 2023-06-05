@@ -260,7 +260,8 @@ class NewXxt:
                 "work_url": work.attrs['data'],
                 "course_name": course_name,
                 "isRedo": self.getIsRedo(work.attrs['data']),
-                "score": self.getWorkScore(work.attrs['data'])
+                "score": self.getWorkScore(work.attrs['data']),
+                "courseId": get_work_date["courseId"],
             }
             i = i + 1
             works.append(_work)

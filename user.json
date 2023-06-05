@@ -1,0 +1,9 @@
+{
+  "users": [
+    {
+      "phone":"你的手机号",
+      "password": "密码",
+      "name": "test1"
+    }
+  ]
+}
