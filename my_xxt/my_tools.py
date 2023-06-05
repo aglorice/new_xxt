@@ -301,7 +301,9 @@ def show_course(courses: list, console: Console) -> None:
 
 def select_users(users: dict, console: Console) -> list:
     user_list = []
-    users_id = console.input("[yellow]请选择你要完成此作业的账号 如(1,2,3) 英文逗号:")
+    users_id = console.input("[yellow]请选择你要完成此作业的账号 如(1,2,3) 英文逗号 全选请输入 all :")
+    if users_id == "all":
+        return users["users"]
     users_id = users_id.replace(" ", "")
     users_id_list = users_id.split(",")
     try:
