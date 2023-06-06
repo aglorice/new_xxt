@@ -111,6 +111,11 @@ python main.py
       "phone":"你的手机号",
       "password": "密码",
       "name": "test1"
+    },
+    {
+      "phone":"你的手机号",
+      "password": "密码",
+      "name": "test1"
     }
   ]
 }
