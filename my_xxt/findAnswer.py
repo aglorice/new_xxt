@@ -7,19 +7,25 @@
 import difflib
 
 
-def match_answer(answer_list: list, question_list: list):
+def match_answer(answer_list: list, question_list: list, question_randomOption: str):
     """
     更具问题寻找答案
+    :param question_randomOption: 判读作业是否是乱序的
     :param answer_list:
     :param question_list:
     :return:
     """
+
     answer = []
     for question in question_list:
         for item in answer_list:
             if question["id"] == item["id"]:
                 if question["type"] == "单选题" or question["type"] == "多选题":
-                    answer_str = find_answer(question["option"], item["option"], item["answer"], question["type"])
+                    # 要是没有乱序就不用去匹配答案
+                    if question_randomOption == "false":
+                        answer_str = item["answer"]
+                    else:
+                        answer_str = find_answer(question["option"], item["option"], item["answer"], question["type"])
                 else:
                     answer_str = item['answer']
                 answer.append({
@@ -31,7 +37,7 @@ def match_answer(answer_list: list, question_list: list):
     return answer
 
 
-def find_answer(question_option: list, answer_option: list, answer,answer_type:str):
+def find_answer(question_option: list, answer_option: list, answer, answer_type: str):
     """
     选择题匹配答案
     :param answer_type:
@@ -50,7 +56,8 @@ def find_answer(question_option: list, answer_option: list, answer,answer_type:s
                 continue
         for item in temp:
             index = diffOption(item, question_option)
-            my_answer = my_answer + question_option[index].split(".")[0]
+
+            my_answer = my_answer + question_option[index].split(" ")[0]
         my_answer = "".join(sorted(my_answer))
     elif answer_type == "单选题":
         temp = ""
