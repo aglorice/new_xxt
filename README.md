@@ -7,7 +7,7 @@
 
 ![GitHub stars](https://img.shields.io/github/stars/aglorice/new_xxt.svg)
 ![python](https://img.shields.io/badge/python-3.10-blue)
-![version](https://img.shields.io/badge/version-v0.3.2-blue)
+![version](https://img.shields.io/badge/version-v0.3.3-blue)
 ![contributors](https://badgen.net/github/contributors/aglorice/new_xxt)
 ![prs](https://badgen.net/github/prs/aglorice/new_xxt)
 
@@ -35,6 +35,7 @@
 * [x] 在没有正确答案的情况下提取自己的答案(测试)
 * [x] 多用户批量完成作业
 * [x] 批量提取一个课程所有的作业
+* [x] 自动识别匹配答案策略
 ### 🛸打算实现的功能
 * [ ] 对接题库
 ## 目前对题型支持
