@@ -78,6 +78,8 @@ class NewXxt:
         # 创建一个会话实例
         self.qr_enc = None
         self.qr_uuid = None
+
+        self.randomOptions = "false"
         self.sees = requests.session()
 
         self.header = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) " \
@@ -438,6 +440,12 @@ class NewXxt:
             params=params,
         )
         work_view_soup = BeautifulSoup(work_question_view.text, "lxml")
+        randomOptions_soup = work_view_soup.find_all("input", attrs={"id": "randomOptions"})
+
+        # 判断选项是否是乱序的
+        randomOptions = re.findall(r'value="(.*?)"', str(randomOptions_soup))[0]
+        self.randomOptions = randomOptions
+        
         work_view = work_view_soup.find_all("div", attrs={"class": "padBom50 questionLi"})
         _question_type = QuestionType()
         for item in work_view:

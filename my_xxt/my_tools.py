@@ -164,7 +164,7 @@ def select_menu(console: Console, xxt: NewXxt) -> None:
             else:
                 dir_path = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
                 path = os.path.join(dir_path, "answers", f"{work['id']}.json")
-                answer = match_answer(jsonFileToDate(path)[work["id"]], questions)
+                answer = match_answer(jsonFileToDate(path)[work["id"]], questions,xxt.randomOptions)
                 show_answer(answer_list=answer, console=console)
             choose = console.input("[yellow]是否继续进行提交：（yes/no）")
             if not (choose == "yes"):
