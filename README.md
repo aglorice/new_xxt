@@ -137,7 +137,7 @@ python main.py
 
 **最后注意一下，作业还是得自己做，这种行为是不对得😁😁😁**
 ### 如果你觉得不错的话，就请我喝瓶冰可乐吧。😁😁😁
-<img src="img\img_4.png" alt="img_1" style="zoom:30%;" />
+<img src="img\img_4.png" alt="img_1" style="max-width: 30%;" />
 
 ### Star History
 
