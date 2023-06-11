@@ -69,7 +69,7 @@ pip install -r requirements.txt
 python main.py
 ```
 #### 5.使用爬取功能去爬取已完成的作业的账号，得到答案文件后，你可以选择将得到的json文件移动到`answers`文件下，然后使用完成作业的功能即可。使用批量功能前，请提前配置 `user.json`
-#### 如果觉得上述方式比较麻烦，该项目提供exe版本，打开 [releases](https://github.com/aglorice/new_xxt/releases),找到`xxt.zip`,下载下来，解压后运行`xxt/xxt.exe`即可。
+#### 如果觉得上述方式比较麻烦，该项目提供exe版本，打开 [releases](https://github.com/aglorice/new_xxt/releases),找到 `xxt.zip`,下载下来，解压后运行 `xxt/xxt.exe` 即可。
 #### 注意：如果在提交作业的时候提示无效参数，直接再次运行一次就可以了。对于需要重做的作业，你可以先在手机或电脑上点击重做，然后再回到该脚本，作业会显示未交的状态，这个时候就可以使用脚本正常运行。
 
 `answers/27835863.json`
