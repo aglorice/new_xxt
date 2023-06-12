@@ -188,6 +188,10 @@ class NewXxt:
         return course_list
 
     def getInfo(self) -> dict:
+        """
+        获取个人信息
+        :return: 个人信息
+        """
         info_html = self.sees.get(
             url=SELF_INFO,
             headers={
