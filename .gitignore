@@ -1,3 +1,5 @@
 /venv/
 /output/
 /user.json
+
+/__pycache__
