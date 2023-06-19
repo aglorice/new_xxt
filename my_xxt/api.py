@@ -452,7 +452,7 @@ class NewXxt:
         # 判断选项是否是乱序的
         randomOptions = re.findall(r'value="(.*?)"', str(randomOptions_soup))[0]
         self.randomOptions = randomOptions
-        
+
         work_view = work_view_soup.find_all("div", attrs={"class": "padBom50 questionLi"})
         _question_type = QuestionType()
         for item in work_view:
@@ -474,6 +474,19 @@ class NewXxt:
             if item["type"] == type_question:
                 return item["fun"]
         return "error"
+
+    @staticmethod
+    def escape_tags(html_str: str):
+        # 判断是否有html标签
+        if bool(BeautifulSoup(html_str, "html.parser").find()):
+            # 匹配html标签的正则表达式
+            pattern = re.compile(r'<.+?>')
+
+            # 将匹配到的html标签进行转义，但不包含标签中的内容
+            escaped_str = pattern.sub(lambda m: m.group(0).replace("<", "&lt;").replace(">", "&gt;"), html_str)
+            return escaped_str
+        else:
+            return html_str
 
     @staticmethod
     def allQuestionId(answer: list) -> str:
@@ -548,7 +561,7 @@ class NewXxt:
                 from_date_2[key4] = len(item["answer"])
                 for answer_item in range(1, len(item["answer"]) + 1):
                     _key = "answerEditor" + item["id"] + str(answer_item)
-                    from_date_2[_key] = "<p>" + item["answer"][answer_item - 1].split(")")[1] + "<br/></p>"
+                    from_date_2[_key] = "<p>" + item["answer"][answer_item - 1][3:] + "<br/></p>"
             elif "判断题" in item["title"]:
                 key5 = "answertype" + item["id"]
                 from_date_2[key5] = 3
@@ -580,7 +593,7 @@ class NewXxt:
                 from_date_2[key12] = len(item["answer"])
                 for answer_item in range(1, len(item["answer"]) + 1):
                     _key = "answerEditor" + item["id"] + str(answer_item)
-                    from_date_2[_key] = "<p>" + item["answer"][answer_item - 1].split(")")[1] + "<br/></p>"
+                    from_date_2[_key] = "<p>" + self.escape_tags(item["answer"][answer_item - 1][3:]) + "<br/></p>"
             elif "其他" in item['title']:
                 key13 = "answertype" + item["id"]
                 from_date_2[key13] = 8
