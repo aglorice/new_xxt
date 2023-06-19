@@ -59,7 +59,9 @@ answer_type = [
     {"type": "填空题", "fun": "comprehensive", "key": "2"},
     {"type": "简答题", "fun": "shortAnswer", "key": "4"},
     {"type": "论述题", "fun": "essayQuestion", "key": "6"},
-    {"type": "其他", "fun": "other", "key": "8"},
+    {"type": "编程题", "fun": "programme", "key": "9"},
+    {"type": "其他", "fun": "other", "key": "8"}
+
 ]
 # 问题题目类型
 question_type = [
@@ -69,7 +71,8 @@ question_type = [
     {"type": "填空题", "fun": "comprehensive"},
     {"type": "简答题", "fun": "shortAnswer"},
     {"type": "论述题", "fun": "essayQuestion"},
-    {"type": "其他", "fun": "other"},
+    {"type": "编程题", "fun": "programme"},
+    {"type": "其他", "fun": "other"}
 ]
 
 
@@ -570,11 +573,19 @@ class NewXxt:
                 from_date_2[key9] = 1
                 key10 = "answer" + item["id"]
                 from_date_2[key10] = item["answer"]
-            elif "其他" in item['title']:
+            elif "编程题" in item["title"]:
                 key11 = "answertype" + item["id"]
-                from_date_2[key11] = 8
-                key12 = "answer" + item["id"]
-                from_date_2[key12] = item["answer"]
+                from_date_2[key11] = 9
+                key12 = "tiankongsize" + item["id"]
+                from_date_2[key12] = len(item["answer"])
+                for answer_item in range(1, len(item["answer"]) + 1):
+                    _key = "answerEditor" + item["id"] + str(answer_item)
+                    from_date_2[_key] = "<p>" + item["answer"][answer_item - 1].split(")")[1] + "<br/></p>"
+            elif "其他" in item['title']:
+                key13 = "answertype" + item["id"]
+                from_date_2[key13] = 8
+                key14 = "answer" + item["id"]
+                from_date_2[key14] = item["answer"]
 
         commit_from_1 = dict(from_date_2, **commit_from_1)
         return commit_from_1

@@ -93,11 +93,48 @@ class AnswerType:
 
     @staticmethod
     def essayQuestion(item: bs4.element.Tag):
-        print("论述题")
+        option = []
+        answer = item.find("dd").text
+        title = item.find_all("h3", attrs={"class": "mark_name colorDeep"})[0].text
+        question_answer = {
+            "id": item.attrs['data'],
+            "title": title,
+            "type": "论述题",
+            "answer": answer,
+            "option": option
+        }
+        return question_answer
+
+    @staticmethod
+    def programme(item: bs4.element.Tag):
+        option = []
+        answer = []
+        answer_list = item.find_all_next("dl", attrs={"class": "mark_fill colorGreen"})[0].find_all("dd")
+        for _answer in answer_list:
+            answer.append(my_replace(_answer.text))
+        title = item.find_all("h3", attrs={"class": "mark_name colorDeep"})[0].text
+        question_answer = {
+            "id": item.attrs['data'],
+            "title": title,
+            "type": "编程题",
+            "answer": answer,
+            "option": option
+        }
+        return question_answer
 
     @staticmethod
     def other(item: bs4.element.Tag):
-        print("其他")
+        option = []
+        answer = item.find("dd").text
+        title = item.find_all("h3", attrs={"class": "mark_name colorDeep"})[0].text
+        question_answer = {
+            "id": item.attrs['data'],
+            "title": title,
+            "type": "其他",
+            "answer": answer,
+            "option": option
+        }
+        return question_answer
 
     @staticmethod
     def error():

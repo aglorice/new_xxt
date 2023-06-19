@@ -91,6 +91,18 @@ class QuestionType:
         return question_answer
 
     @staticmethod
+    def programme(item: bs4.element.Tag):
+        title = item.find("h3", attrs={"class": "mark_name colorDeep fontLabel"}).text
+        question_answer = {
+            "id": item.attrs['data'],
+            "title": my_replace(title),
+            "type": "编程题",
+            "answer": None,
+            "option": None
+        }
+        return question_answer
+
+    @staticmethod
     def other(item: bs4.element.Tag):
         print("其他")
 

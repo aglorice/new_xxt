@@ -195,7 +195,6 @@ def select_menu(console: Console, xxt: NewXxt) -> None:
             for user in users_select:
                 i = i+1
                 login_status = xxt.login(user["phone"], user["password"])
-
                 # 判断登录成功与否
                 if login_status["status"] == True:
                     courses = xxt.getCourse()
@@ -240,7 +239,7 @@ def select_menu(console: Console, xxt: NewXxt) -> None:
             console.log(f"[yellow]一共成功{success_count},失败数为{fail_count}")
             continue
         # 退出登录
-        elif index == "9":
+        elif index == "9":         
             return
         select_error(console)
 
@@ -275,6 +274,7 @@ def show_start(console: Console) -> None:
 def show_users(users: dict, console: Console) -> None:
     tb = Table("序号", "账号", "密码", "姓名", border_style="blue")
     i = 0
+    
     for user in users["users"]:
         tb.add_row(
             f"[green]{i + 1}",
