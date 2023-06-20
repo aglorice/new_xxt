@@ -21,7 +21,7 @@ def match_answer(answer_list: list, question_list: list, question_randomOption: 
         for item in answer_list:
             if question["id"] == item["id"]:
                 if question["type"] == "单选题" or question["type"] == "多选题":
-                    # 要是没有乱序就不用去匹配答案
+                    # 判断是否是乱序的
                     if question_randomOption == "false":
                         answer_str = item["answer"]
                     else:
@@ -54,6 +54,7 @@ def find_answer(question_option: list, answer_option: list, answer, answer_type:
             if item.split(".")[0] in answer:
                 temp.append(item)
                 continue
+        # 选项相似度匹配
         for item in temp:
             index = diffOption(item, question_option)
 

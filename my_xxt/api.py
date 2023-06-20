@@ -17,6 +17,7 @@ from bs4 import BeautifulSoup
 from Crypto.Cipher import AES
 from Crypto.Util.Padding import pad
 import requests as requests
+from rich.console import Console
 
 from my_xxt.answer_type import AnswerType
 from my_xxt.question_type import QuestionType
@@ -60,7 +61,7 @@ answer_type = [
     {"type": "简答题", "fun": "shortAnswer", "key": "4"},
     {"type": "论述题", "fun": "essayQuestion", "key": "6"},
     {"type": "编程题", "fun": "programme", "key": "9"},
-    {"type": "其他", "fun": "other", "key": "8"}
+    {"type": "其他", "fun": "other", "key": "8"},
 
 ]
 # 问题题目类型
@@ -320,7 +321,7 @@ class NewXxt:
         except Exception as e:
             return "no"
 
-    def getAnswer(self, work_url: str) -> list:
+    def getAnswer(self, work_url: str, ) -> list:
         """
         爬取已完成作业的答案
         :param work_url:
@@ -341,7 +342,7 @@ class NewXxt:
             # 根据选项去自动调用对应的方法来解析数据
             func_name = self.selectFunc(title_type, answer_type)
             func = getattr(_answer_type, func_name)
-            work_answer.append(func(item))
+            work_answer.append(func(item, Console(width=100)))
         return work_answer
 
     def create_from(self, work_url: str) -> dict:
@@ -470,9 +471,11 @@ class NewXxt:
 
     @staticmethod
     def selectFunc(type_question: str, _type: list) -> str:
+        # 选择题目类型
         for item in _type:
             if item["type"] == type_question:
                 return item["fun"]
+        # 如果没有找到对应的题目类型，返回error
         return "error"
 
     @staticmethod
