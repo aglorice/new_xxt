@@ -439,7 +439,7 @@ def get_not_work(courses: list, xxt: NewXxt, console: Console, sleep_time: float
                             "course_name": work["course_name"]
                         })
             except Exception as e:
-                console.print("[red]出现了一点小意外")
+                console.print(f"[red]在查找课程[green]《{course['course_name']}》[/green]出现了一点小意外")
     return not_work
 
 

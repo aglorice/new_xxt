@@ -104,11 +104,19 @@ class QuestionType:
 
     @staticmethod
     def other(item: bs4.element.Tag):
-        print("其他")
+        title = item.find("h3", attrs={"class": "mark_name colorDeep fontLabel"}).text
+        question_answer = {
+            "id": item.attrs['data'],
+            "title": my_replace(title),
+            "type": "其他",
+            "answer": None,
+            "option": None
+        }
+        return question_answer
 
     @staticmethod
     def error():
-        print("出现了错误")
+        print("该题型暂不支持")
 
 
 def my_replace(_string: str):
