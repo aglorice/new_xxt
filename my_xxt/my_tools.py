@@ -13,7 +13,6 @@ import time
 from rich.console import Console
 from rich.table import Table
 
-from my_xxt.config import GET_WORK_ANSWER_STATUS
 from my_xxt.findAnswer import match_answer
 from my_xxt.api import NewXxt
 
@@ -102,7 +101,7 @@ def select_menu(console: Console, xxt: NewXxt) -> None:
             if work == {}:
                 console.print("[red]该课程下没有作业")
                 continue
-            if work["work_status"] == GET_WORK_ANSWER_STATUS:
+            if work["work_status"] == "已完成":
                 answer_list = xxt.getAnswer(work["work_url"])
             else:
                 console.print("[red]该作业似乎没有完成")
