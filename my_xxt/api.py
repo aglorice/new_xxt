@@ -20,9 +20,12 @@ import requests as requests
 from rich.console import Console
 
 from my_xxt.answer_type import AnswerType
+from my_xxt.config import GET_WORK_ANSWER_STATUS
 from my_xxt.question_type import QuestionType
 
 # 加密密钥
+from my_xxt.to_be_reviewed_type import ToBeReviewedAnswerType
+
 key = b"u2oh6Vu^HWe4_AES"
 
 # 登录接口（post）
@@ -336,13 +339,21 @@ class NewXxt:
         )
         work_view_soup = BeautifulSoup(work_answer_view.text, "lxml")
         work_view = work_view_soup.find_all("div", attrs={"class": "marBom60 questionLi"})
+        # 已完成作业的答案解析
         _answer_type = AnswerType()
+        # 待批阅作业的答案解析
+        to_be_reviewed_answer_type = ToBeReviewedAnswerType()
         for item in work_view:
             title_type = item.find_next("span").string.split(",")[0].replace("(", "").replace(")", "")
             # 根据选项去自动调用对应的方法来解析数据
-            func_name = self.selectFunc(title_type, answer_type)
-            func = getattr(_answer_type, func_name)
-            work_answer.append(func(item, Console(width=100)))
+            if GET_WORK_ANSWER_STATUS == "已完成":
+                func_name = self.selectFunc(title_type, answer_type)
+                func = getattr(_answer_type, func_name)
+                work_answer.append(func(item, Console(width=100)))
+            elif GET_WORK_ANSWER_STATUS == "待批阅":
+                func_name = self.selectFunc(title_type, answer_type)
+                func = getattr(to_be_reviewed_answer_type, func_name)
+                work_answer.append(func(item, Console(width=100)))
         return work_answer
 
     def create_from(self, work_url: str) -> dict:
