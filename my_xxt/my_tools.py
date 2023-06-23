@@ -164,7 +164,7 @@ def select_menu(console: Console, xxt: NewXxt) -> None:
             else:
                 dir_path = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
                 path = os.path.join(dir_path, "answers", f"{work['id']}.json")
-                answer = match_answer(jsonFileToDate(path)[work["id"]], questions,xxt.randomOptions)
+                answer = match_answer(jsonFileToDate(path)[work["id"]], questions, xxt.randomOptions)
                 show_answer(answer_list=answer, console=console)
             choose = console.input("[yellow]是否继续进行提交：（yes/no）")
             if not (choose == "yes"):
@@ -193,7 +193,7 @@ def select_menu(console: Console, xxt: NewXxt) -> None:
             success_count = 0
             fail_count = 0
             for user in users_select:
-                i = i+1
+                i = i + 1
                 login_status = xxt.login(user["phone"], user["password"])
                 # 判断登录成功与否
                 if login_status["status"] == True:
@@ -239,7 +239,7 @@ def select_menu(console: Console, xxt: NewXxt) -> None:
             console.log(f"[yellow]一共成功{success_count},失败数为{fail_count}")
             continue
         # 退出登录
-        elif index == "9":         
+        elif index == "9":
             return
         select_error(console)
 
@@ -274,7 +274,7 @@ def show_start(console: Console) -> None:
 def show_users(users: dict, console: Console) -> None:
     tb = Table("序号", "账号", "密码", "姓名", border_style="blue")
     i = 0
-    
+
     for user in users["users"]:
         tb.add_row(
             f"[green]{i + 1}",
