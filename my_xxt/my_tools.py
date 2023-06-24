@@ -153,10 +153,20 @@ def select_menu(console: Console, xxt: NewXxt) -> None:
             if work == {}:
                 console.print("[red]该课程下没有作业")
                 continue
-            if work["work_status"] == "已完成":
+            if work["work_status"] == "已完成" and work["isRedo"] == "no":
                 console.print("[red]该作业已经完成了")
                 continue
             else:
+                if work["isRedo"] == "yes":
+                    choose = console.input("[yellow]该作业可以重做，请确认是否要重做：（yes/no）")
+                    if choose == "no":
+                        continue
+                    else:
+                        result = xxt.redoWork(work["work_url"])
+                        if result["status"] == 1:
+                            console.print("[green]作业重做成功")
+                        else:
+                            console.print(f"[red]作业重做失败,错误原因[red]{result['msg']}[/red]")
                 questions = xxt.get_question(work["work_url"])
             if not is_exist_answer_file(f"{work['id']}.json"):
                 console.print("[green]没有在答案文件中匹配到对应的答案文件")
@@ -166,11 +176,12 @@ def select_menu(console: Console, xxt: NewXxt) -> None:
                 path = os.path.join(dir_path, "answers", f"{work['id']}.json")
                 answer = match_answer(jsonFileToDate(path)[work["id"]], questions, xxt.randomOptions)
                 show_answer(answer_list=answer, console=console)
+
             choose = console.input("[yellow]是否继续进行提交：（yes/no）")
             if not (choose == "yes"):
                 continue
             ret = xxt.commit_work(answer, work)
-            console.print(ret)
+            console.log(ret)
             works = xxt.getWorks(course["course_url"], course["course_name"])
             show_works(works, console)
             continue
