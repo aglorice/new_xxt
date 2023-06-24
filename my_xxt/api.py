@@ -52,6 +52,9 @@ IS_QR_LOGIN = "https://passport2.chaoxing.com/getauthstatus"
 # 登录页面首页（get）
 HOME_LOGIN = "https://passport2.chaoxing.com/login"
 
+# 重做作业（get）
+REDO_WORK = "https://mooc1.chaoxing.com/work/phone/redo"
+
 # 答案题目类型
 answer_type = [
     {"type": "单选题", "fun": "multipleChoice", "key": "0"},
@@ -321,6 +324,44 @@ class NewXxt:
         except Exception as e:
             return "no"
 
+    def redoWork(self, work_url: str) -> dict:
+        """
+        重做作业
+        :param work_url:
+        :return:
+        """
+        response = self.sees.get(
+            url=work_url,
+            headers={
+                "User-Agent": self.header,
+            },
+        )
+        work_view_html_soup = BeautifulSoup(response.text, "lxml")
+        input_date = work_view_html_soup.find_all("input")
+        redo_date = {}
+        try:
+            for _input in input_date:
+                _key = re.findall(r'id="(.*?)"', str(_input))
+                _value = str(_input.attrs['value'])
+                redo_date[_key[0]] = _value
+                redo_date = redo_date
+        except Exception as e:
+            redo_date = redo_date
+        result = self.sees.get(
+            url=REDO_WORK,
+            headers={
+                "User-Agent": self.header,
+            },
+            params={
+                "courseId": redo_date["courseId"],
+                "classId": redo_date["classId"],
+                "cpi": redo_date["cpi"],
+                "workId": redo_date["workId"],
+                "workAnswerId": redo_date["answerId"]
+            }
+        )
+        return result.json()
+
     def getAnswer(self, work_url: str, ) -> list:
         """
         爬取已完成作业的答案
@@ -373,7 +414,6 @@ class NewXxt:
                 _key = re.findall(r'id="(.*?)"', str(_input))
                 _value = str(_input.attrs['value'])
                 commit_date_form[_key[0]] = _value
-                commit_date_form = commit_date_form
         except Exception as e:
             commit_date_form = commit_date_form
         commit_date = {
