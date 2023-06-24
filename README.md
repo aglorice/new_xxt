@@ -4,13 +4,13 @@
     </h1>
     <img src="img/img_3.png">
 <p>该脚本仅用于爬虫技术的学习，如果你有好的功能或者想法，欢迎提交pr<a href=""></a></p>
+</div>
+
 ![GitHub stars](https://img.shields.io/github/stars/aglorice/new_xxt.svg)
 ![python](https://img.shields.io/badge/python-3.10-blue)
 ![version](https://img.shields.io/badge/version-v0.3.5-blue)
 ![contributors](https://badgen.net/github/contributors/aglorice/new_xxt)
 ![prs](https://badgen.net/github/prs/aglorice/new_xxt)
-
-</div>
 
 ## 1️⃣实现方法
 - 从已完成该课程的作业的账号中获取作业答案
