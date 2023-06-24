@@ -8,7 +8,7 @@
 
 ![GitHub stars](https://img.shields.io/github/stars/aglorice/new_xxt.svg)
 ![python](https://img.shields.io/badge/python-3.10-blue)
-![version](https://img.shields.io/badge/version-v0.3.5-blue)
+![version](https://img.shields.io/badge/version-v0.3.6-blue)
 ![contributors](https://badgen.net/github/contributors/aglorice/new_xxt)
 ![prs](https://badgen.net/github/prs/aglorice/new_xxt)
 
@@ -37,6 +37,7 @@
 * [x] 多用户批量完成作业
 * [x] 批量提取一个课程所有的作业
 * [x] 自动识别匹配答案策略
+* [x] 新增自动进行重做操作😁
 ### 未来计划实现的功能✨✨✨
 * [ ] 对接题库
 * [ ] ai自动识别答案(chatgpt3.5)
@@ -74,7 +75,6 @@ python main.py
 ```
 #### 5.使用爬取功能去爬取已完成的作业的账号，得到答案文件后，你可以选择将得到的json文件移动到`answers`文件下，然后使用完成作业的功能即可。使用批量功能前，请提前配置 `user.json`
 #### 如果觉得上述方式比较麻烦，该项目提供exe版本，打开 [releases](https://github.com/aglorice/new_xxt/releases),找到 `xxt.zip`,下载下来，解压后运行 `xxt/xxt.exe` 即可。
-#### 注意：如果在提交作业的时候提示无效参数，直接再次运行一次就可以了。对于需要重做的作业，你可以先在手机或电脑上点击重做，然后再回到该脚本，作业会显示未交的状态，这个时候就可以使用脚本正常运行。
 
 `answers/27835863.json`
 ```json
