@@ -241,7 +241,7 @@ def select_menu(console: Console, xxt: NewXxt) -> None:
                                 console.print(f"({i})  [green]{user['name']}---该用户的作业操作成功[blue]最终分数为{work['score']}")
                                 success_count = success_count + 1
                             else:
-                                console.print(f"({i})  [green]{user['name']}---该用户的作业操作失败 {ret}")
+                                console.print(f"({i})  [green]{user['name']}---该用户的作业操作失败 {ret},你可以再次尝试一次。")
                                 fail_count = fail_count + 1
                                 continue
                 else:
