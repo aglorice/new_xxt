@@ -9,7 +9,7 @@ import difflib
 
 def match_answer(answer_list: list, question_list: list, question_randomOption: str):
     """
-    更具问题寻找答案
+    根据问题寻找答案
     :param question_randomOption: 判读作业是否是乱序的
     :param answer_list:
     :param question_list:
