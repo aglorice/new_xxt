@@ -45,7 +45,8 @@ jobs:
           pyinstaller --noconfirm --onedir --console --name "xxt" --add-data "LICENSE;." --add-data "README.md;." --add-data "user.json;." --add-data "answers;answers/"  "main.py"
       - name: output to zip
         run: |
-          7z a -tzip new_xxt_For_${{ runner.os }}_x64.zip .output/xxt
+          cd ./dist
+          7z a -tzip new_xxt_For_${{ runner.os }}_x64.zip /xxt
 
       - name: Create Release
         id: create_release
