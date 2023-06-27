@@ -53,8 +53,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.XXT  }}
         with:
-          tag_name: ${{ github.red }} # (tag)标签名称
-          release_name: Release ${{ github.red }}
+          tag_name: v0.1.1 # (tag)标签名称
+          release_name: Release v0.1.1
           draft: false # 是否是草稿
           prerelease: false # 是否是预发布
 
