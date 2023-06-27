@@ -11,8 +11,6 @@ import time
 import random
 from urllib import parse
 from urllib.parse import urlparse
-
-import bs4
 from bs4 import BeautifulSoup
 from Crypto.Cipher import AES
 from Crypto.Util.Padding import pad
