@@ -40,7 +40,7 @@ jobs:
           pip install -r requirements.txt
       - name: pyinstaller package exe
         run: |
-          pyinstaller --noconfirm --onedir --console --name "xxt" --add-data "LICENSE;." --add-data "README.md;." --add-data "user.json;." --add-data "/answers"  "main.py"
+          pyinstaller --noconfirm --onedir --console --name "xxt" --add-data "LICENSE;." --add-data "README.md;." --add-data "user.json;." --add-data "/answers;answers/"  "main.py"
       - name: output to zip
         run: |
           cd ./output
