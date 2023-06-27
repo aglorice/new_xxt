@@ -19,7 +19,7 @@ jobs:
   build:
     strategy:
       matrix:
-        os: [ macos-latest, ubuntu-latest, windows-latest ]
+        os: [ windows-latest ]
     runs-on: windows-latest
 
     steps:
@@ -53,8 +53,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.XXT  }}
         with:
-          tag_name: ${{ github.ref }} # (tag)标签名称
-          release_name: Release ${{ github.ref }}
+          tag_name: ${{ github.red }} # (tag)标签名称
+          release_name: Release ${{ github.red }}
           draft: false # 是否是草稿
           prerelease: false # 是否是预发布
 
