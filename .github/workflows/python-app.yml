@@ -47,7 +47,7 @@ jobs:
         run: |
           cd ./dist
           dir
-          7z a -tzip new_xxt_For_${{ runner.os }}_x64.zip /xxt
+          7z a -tzip new_xxt_For_${{ runner.os }}_x64.zip xxt
 
       - name: Create Release
         id: create_release
