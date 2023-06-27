@@ -14,6 +14,7 @@ permissions:
   contents: read
 
 
+
 jobs:
   build:
     strategy:
@@ -38,6 +39,7 @@ jobs:
       - name: dependencies Install
         run: |
           pip install -r requirements.txt
+
       - name: pyinstaller package exe
         run: |
           pyinstaller --noconfirm --onedir --console --name "xxt" --add-data "LICENSE;." --add-data "README.md;." --add-data "user.json;." --add-data "/answers;answers/"  "main.py"
