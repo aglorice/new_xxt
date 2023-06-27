@@ -22,23 +22,48 @@ jobs:
     runs-on: windows-latest
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Set up Python 3.10
-      uses: actions/setup-python@v3
-      with:
-        python-version: "3.10"
-    - name: Pypi Install
-      run: |
-        python -m pip install --upgrade pip
-
-    - name: Pypi Install
-      run: |
+      - uses: actions/checkout@v3
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v3
+        with:
+          python-version: "3.10"
+      - name: Pypi Install
+        run: |
           python -m pip install --upgrade pip
 
-    - name: dependencies Install
-      run: |
-        pip install -r requirements.txt
-    - name: pyinstaller package exe
-      run: |
-        pyinstaller --noconfirm --onedir --console --name "xxt" --add-data "./new_xxt/LICENSE;." --add-data "./new_xxt/README.md;." --add-data "./new_xxt/user.json;." --add-data "./new_xxt/answers;answers/"  "./new_xxt/main.py"
-        
+      - name: Pypi Install
+        run: |
+          python -m pip install --upgrade pip
+
+      - name: dependencies Install
+        run: |
+          pip install -r requirements.txt
+      - name: pyinstaller package exe
+        run: |
+          pyinstaller --noconfirm --onedir --console --name "xxt" --add-data "LICENSE;." --add-data "README.md;." --add-data "user.json;." --add-data "answers"  "main.py"
+      - name: output to zip
+        run: |
+          cd ./output
+          7z a -tzip new_xxt_For_${{ runner.os }}_x64.zip ./xxt
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}
+        with:
+          tag_name: ${{ github.ref }} # (tag)标签名称
+          release_name: Release ${{ github.ref }}
+          draft: false # 是否是草稿
+          prerelease: false # 是否是预发布
+
+      - name: Upload Release Asset
+        id: upload-release-asset
+        uses: actions/upload-release-asset@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }} # 上传地址，通过创建Release获取到的
+          asset_path: ./new_xxt_For_${{ runner.os }}_x64.zip # 要上传文件
+          asset_name: new_xxt_For_${{ runner.os }}_x64.zip # 上传后的文件名
+          asset_content_type: application/zip # 文件类型
