@@ -59,7 +59,6 @@ jobs:
           draft: false # 是否是草稿
           prerelease: false # 是否是预发布
 
-
       - name: Upload Release Asset
         id: upload-release-asset
         uses: actions/upload-release-asset@master
