@@ -7,9 +7,6 @@ from my_xxt.login import login
 console = Console(width=100)
 
 
-
-
-
 if __name__ == '__main__':
     while True:
         show_start(console)
