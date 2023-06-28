@@ -8,6 +8,8 @@ console = Console(width=100)
 
 
 
+
+
 if __name__ == '__main__':
     while True:
         show_start(console)
