@@ -4,7 +4,7 @@
     </h1>
     <img src="img/img_3.png">
 <p>该脚本仅用于爬虫技术的学习，如果你有好的功能或者想法，欢迎提交pr</p>
-<p style="color: lightskyblue">注意：该脚本完成作业的答案需要从已完成作业账号中导出，仅适合自用！！！</p>
+<p>🛸注意：该脚本完成作业的答案需要从已完成作业账号中导出，仅适合自用！！！</p>
 </div>
 
 ![GitHub stars](https://img.shields.io/github/stars/aglorice/new_xxt.svg)
@@ -17,7 +17,7 @@
 - 从已完成该课程的作业的账号中获取作业答案
 - 登录到自己的账号获取题目顺序，与之前的答案进行比较获取到正确的选项或者填空
 - 构造表单数据发起请求完成提交作业
-
+ 
 
 ## 2️⃣功能支持列表
 > 该脚本目前已在其他的学校的学习通上成功运行，如果你在使用的时候遇到了问题，欢迎提交[issue](https://github.com/aglorice/new_xxt/issues)😍😍😍
