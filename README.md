@@ -3,7 +3,8 @@
      学习通,泛雅，超星 作业一键完成（全新版本✨✨✨）
     </h1>
     <img src="img/img_3.png">
-<p>该脚本仅用于爬虫技术的学习，如果你有好的功能或者想法，欢迎提交pr<a href=""></a></p>
+<p>该脚本仅用于爬虫技术的学习，如果你有好的功能或者想法，欢迎提交pr</p>
+<p style="color: lightskyblue">注意：该脚本完成作业的答案需要从已完成作业账号中导出，仅适合自用！！！</p>
 </div>
 
 ![GitHub stars](https://img.shields.io/github/stars/aglorice/new_xxt.svg)
