@@ -20,7 +20,7 @@
  
 
 ## 2️⃣功能支持列表
-> 该脚本目前已在其他的学校的学习通上成功运行，如果你在使用的时候遇到了问题，欢迎提交[issue](https://github.com/aglorice/new_xxt/issues)😍😍😍
+> 如果你在使用的时候遇到了问题，欢迎提交[issue](https://github.com/aglorice/new_xxt/issues)😍😍😍
 ### 🚀已实现的功能
 * [x] 查询所有的课程
 * [x] 查询课程作业
