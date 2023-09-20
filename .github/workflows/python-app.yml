@@ -20,8 +20,7 @@ jobs:
     strategy:
       matrix:
         os: [ windows-latest ]
-    runs-on: ${{ matrix.os }}
-
+    runs-on: ${{ matrix.os }}::wq
     steps:
       - uses: actions/checkout@v3
       - name: Set up Python 3.10
@@ -62,7 +61,7 @@ jobs:
         id: upload-release-asset
         uses: actions/upload-release-asset@master
         env:
-          GITHUB_TOKEN: ${{ secrets.XXT  }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN  }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }} # 上传地址，通过创建Release获取到的
           asset_path: ./new_xxt_For_${{ runner.os }}_x64.zip # 要上传文件
