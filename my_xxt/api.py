@@ -9,6 +9,8 @@ import re
 import secrets
 import time
 import random
+import traceback
+from types import NoneType
 from urllib import parse
 from urllib.parse import urlparse
 from bs4 import BeautifulSoup
@@ -168,6 +170,8 @@ class NewXxt:
         )
         course = BeautifulSoup(course.text, "lxml")
         course_div_list = course.find_all("div", attrs={"class": "course-info"})
+        if len(course_div_list) == 0:
+            return course_list
         i = 1
         for course_div in course_div_list:
             try:
@@ -176,19 +180,12 @@ class NewXxt:
                     "course_name": self.my_replace(course_div.span.string),
                     "course_url": course_div.a.attrs['href'],
                     "course_teacher": self.my_replace(
-                        course_div.find_next("p", attrs={"class", "line2 color3"})["title"]),
+                        course_div.find_next("p", attrs={"class", "line2 color3"}).get("title", "小明")),
                     "course_class": course_div.find_next("p", attrs={"class", "overHidden1"}).text
                 }
-            except Exception as e:
-                # 先写着，万一有啥特殊情况
-                course_dict = {
-                    "id": str(i),
-                    "course_name": self.my_replace(course_div.span.string),
-                    "course_url": course_div.a.attrs['href'],
-                    "course_teacher": "小明",
-                    "course_class": course_div.find_next("p", attrs={"class", "overHidden1"}).text
-                }
-            course_list.append(course_dict)
+                course_list.append(course_dict)
+            except NoneType:
+                traceback.print_exc()
             i = i + 1
         return course_list
 
