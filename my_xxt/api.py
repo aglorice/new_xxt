@@ -489,7 +489,7 @@ class NewXxt:
         randomOptions = re.findall(r'value="(.*?)"', str(randomOptions_soup))[0]
         self.randomOptions = randomOptions
 
-        work_view = work_view_soup.find_all("div", attrs={"class": "padBom50 questionLi"})
+        work_view = work_view_soup.find_all("div", attrs={"class": "padBom50 questionLi fontLabel"})
         _question_type = QuestionType()
         for item in work_view:
             title_type = item.find_next("span").string.split(",")[0].replace("(", "").replace(")", "")
