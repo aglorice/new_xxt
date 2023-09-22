@@ -398,7 +398,7 @@ def show_all_answer_file(console: Console) -> None:
     for root, dirs, files in os.walk(path):
         answer_files.append(files)
     for item in answer_files[0]:
-        _path = path + '\\' + item
+        _path = os.path.join(path, item)
         answer_file_info.append(jsonFileToDate(_path)["info"])
 
     tb = Table("id", "作业名", "文件名称", "课程名称", border_style="blue")
