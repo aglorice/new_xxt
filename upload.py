@@ -23,7 +23,7 @@ def update_version():
 
 
 def git_push_readme():
-    os.system("git add .")
+    os.system("git add README.md")
     os.system("git commit -m 'update version'")
     os.system("git push origin red")
     print("2.提交新修改的README.md文件并推送到github成功！")
@@ -35,8 +35,8 @@ def git_push_readme():
 
 
 def git_tag():
-    os.system("git tag -a v{} -m 'v{}'".format(__VERSION__, __VERSION__))
-    os.system("git push origin v{}".format(__VERSION__))
+    os.system("git tag -a {} -m '{}'".format(__VERSION__, __VERSION__))
+    os.system("git push origin {}".format(__VERSION__))
     print("3.自动生成创建新git tag标签，并上穿到github成功！")
 
 
