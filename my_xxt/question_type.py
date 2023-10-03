@@ -115,7 +115,7 @@ class QuestionType:
         return question_answer
 
     @staticmethod
-    def error():
+    def error(item: bs4.element.Tag):
         print("该题型暂不支持")
 
 
