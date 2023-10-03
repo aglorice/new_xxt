@@ -16,6 +16,8 @@ from rich.table import Table
 from my_xxt.findAnswer import match_answer
 from my_xxt.api import NewXxt
 
+from config import __VERSION__
+
 
 def select_error(console: Console):
     console.print("[green]发生了一些未知的错误！")
@@ -214,7 +216,8 @@ def select_menu(console: Console, xxt: NewXxt) -> None:
                     work = find_work(works, work["work_id"])
                     # 判断是否存在作业或者课程
                     if course == {} or work == {}:
-                        console.print(f"({i})  [green]{user['name']}---该用户的作业操作失败[red]该账号不存在该课程或者作业")
+                        console.print(
+                            f"({i})  [green]{user['name']}---该用户的作业操作失败[red]该账号不存在该课程或者作业")
                         fail_count = fail_count + 1
                     else:
                         # 判断作业是什么状态
@@ -226,7 +229,8 @@ def select_menu(console: Console, xxt: NewXxt) -> None:
                             questions = xxt.get_question(work["work_url"])
                         # 判断是否存在答案文件
                         if not is_exist_answer_file(f"{work['id']}.json"):
-                            console.print(f"({i})  [green]{user['name']}---该用户的作业操作失败[red]没有在答案文件中匹配到对应的答案文件")
+                            console.print(
+                                f"({i})  [green]{user['name']}---该用户的作业操作失败[red]没有在答案文件中匹配到对应的答案文件")
                             fail_count = fail_count + 1
                             continue
                         else:
@@ -238,10 +242,12 @@ def select_menu(console: Console, xxt: NewXxt) -> None:
                             if ret["msg"] == 'success!':
                                 works = xxt.getWorks(course["course_url"], course["course_name"])
                                 work = find_work(works, work["work_id"])
-                                console.print(f"({i})  [green]{user['name']}---该用户的作业操作成功[blue]最终分数为{work['score']}")
+                                console.print(
+                                    f"({i})  [green]{user['name']}---该用户的作业操作成功[blue]最终分数为{work['score']}")
                                 success_count = success_count + 1
                             else:
-                                console.print(f"({i})  [green]{user['name']}---该用户的作业操作失败 {ret},你可以再次尝试一次。")
+                                console.print(
+                                    f"({i})  [green]{user['name']}---该用户的作业操作失败 {ret},你可以再次尝试一次。")
                                 fail_count = fail_count + 1
                                 continue
                 else:
@@ -280,6 +286,7 @@ def show_start(console: Console) -> None:
   ╚═╝  ╚═══╝╚══════╝ ╚══╝╚══╝ ╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝  ", justify="center")
 
     console.print("[red]注意：该脚本仅供学习参考,详细信息请参考https://github.com/aglorice/new_xxt")
+    console.print(f"[red]当前版本为 {__VERSION__}")
 
 
 def show_users(users: dict, console: Console) -> None:
@@ -334,7 +341,8 @@ def show_menu(console: Console) -> None:
     console.print("5.爬取指定作业的答案", highlight=True)
     console.print("6.批量爬取指定课程的答案", highlight=True)
     console.print("7.完成作业（请先确认是否已经爬取了你想要完成作业的答案）", highlight=True)
-    console.print("8.批量完成作业完成作业（请先确认是否已经爬取了你想要完成作业的答案，请填好user.json里的账号数据）", highlight=True)
+    console.print("8.批量完成作业完成作业（请先确认是否已经爬取了你想要完成作业的答案，请填好user.json里的账号数据）",
+                  highlight=True)
     console.print("9.退出登录", highlight=True)
     console.rule(characters="+")
 
