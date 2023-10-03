@@ -41,7 +41,7 @@ jobs:
 
       - name: pyinstaller package exe
         run: |
-          pyinstaller --noconfirm --onedir --console --name "xxt" --add-data "LICENSE;." --add-data "README.md;." --add-data "user.json;." --add-data "answers;answers/"  "main.py"
+          pyinstaller --noconfirm --onedir --console --name "xxt" --add-data "LICENSE;." --add-data "README.md;." --add-data "config.py;." --add-data "user.json;." --add-data "answers;answers/"  "main.py"
       - name: output to zip
         run: |
           7z a -tzip new_xxt_For_${{ runner.os }}_x64.zip ./dist/xxt/*
