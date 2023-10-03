@@ -1,5 +1,5 @@
 /venv/
 /output/
 /user.json
-
+./upload.py
 /__pycache__
