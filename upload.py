@@ -22,7 +22,7 @@ def update_version():
 """
 
 
-def git_push():
+def git_push_readme():
     os.system("git add .")
     os.system("git commit -m 'update version'")
     os.system("git push origin red")
@@ -42,3 +42,5 @@ def git_tag():
 
 if __name__ == '__main__':
     update_version()
+    git_push_readme()
+    git_tag()
