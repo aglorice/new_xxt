@@ -10,6 +10,7 @@ import secrets
 import time
 import random
 import traceback
+from functools import cache
 from types import NoneType
 from urllib import parse
 from urllib.parse import urlparse
@@ -148,6 +149,7 @@ class NewXxt:
         )
         return resp.json()
 
+    @cache
     def getCourse(self) -> list:
         """
         获取所有的课程
