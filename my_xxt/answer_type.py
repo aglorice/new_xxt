@@ -29,9 +29,8 @@ class AnswerType:
             }
             return question_answer
         except Exception as e:
-            console.print(f"[bold red]题目解析错误[/bold red]")
+            console.print(f"[bold red]单选题题目解析错误[/bold red]")
             console.print(f"[bold red]错误信息:{e}[/bold red]")
-            console.print(f"[bold red]错误题目:{title}")
 
     @staticmethod
     def multipleChoices(item: bs4.element.Tag, console: Console) -> dict:
@@ -53,9 +52,8 @@ class AnswerType:
             }
             return question_answer
         except Exception as e:
-            console.print(f"[bold red]题目解析错误[/bold red]")
+            console.print(f"[bold red]多选题题目解析错误[/bold red]")
             console.print(f"[bold red]错误信息:{e}[/bold red]")
-            console.print(f"[bold red]错误题目:{title}")
 
     @staticmethod
     def judgeChoice(item: bs4.element.Tag, console: Console) -> dict:
@@ -72,9 +70,8 @@ class AnswerType:
             }
             return question_answer
         except Exception as e:
-            console.print(f"[bold red]题目解析错误[/bold red]")
+            console.print(f"[bold red]判断题题目解析错误[/bold red]")
             console.print(f"[bold red]错误信息:{e}[/bold red]")
-            console.print(f"[bold red]错误题目:{title}")
 
     @staticmethod
     def comprehensive(item: bs4.element.Tag, console: Console) -> dict:
@@ -94,9 +91,9 @@ class AnswerType:
             }
             return question_answer
         except Exception as e:
-            console.print(f"[bold red]题目解析错误[/bold red]")
+            console.print(f"[bold red]填空题题目解析错误[/bold red]")
             console.print(f"[bold red]错误信息:{e}[/bold red]")
-            console.print(f"[bold red]错误题目:{title}")
+            console.print(f"[bold red]题目信息:{item}[/bold red]")
 
     @staticmethod
     def shortAnswer(item: bs4.element.Tag, console: Console) -> dict:
@@ -113,9 +110,8 @@ class AnswerType:
             }
             return question_answer
         except Exception as e:
-            console.print(f"[bold red]题目解析错误[/bold red]")
+            console.print(f"[bold red]简答题题目解析错误[/bold red]")
             console.print(f"[bold red]错误信息:{e}[/bold red]")
-            console.print(f"[bold red]错误题目:{title}")
 
     @staticmethod
     def essayQuestion(item: bs4.element.Tag, console: Console):
@@ -132,10 +128,8 @@ class AnswerType:
             }
             return question_answer
         except Exception as e:
-            console.print(f"[bold red]题目解析错误[/bold red]")
+            console.print(f"[bold red]论述题题目解析错误[/bold red]")
             console.print(f"[bold red]错误信息:{e}[/bold red]")
-            console.print(f"[bold red]错误题目:{title}")
-
     @staticmethod
     def programme(item: bs4.element.Tag, console: Console):
         try:
@@ -154,9 +148,9 @@ class AnswerType:
             }
             return question_answer
         except Exception as e:
-            console.print(f"[bold red]题目解析错误[/bold red]")
+            console.print(f"[bold red]编程题题目解析错误[/bold red]")
             console.print(f"[bold red]错误信息:{e}[/bold red]")
-            console.print(f"[bold red]错误题目:{title}")
+
 
     @staticmethod
     def other(item: bs4.element.Tag, console: Console):
@@ -173,9 +167,9 @@ class AnswerType:
             }
             return question_answer
         except Exception as e:
-            console.print(f"[bold red]题目解析错误[/bold red]")
+            console.print(f"[bold red]其他题目解析错误[/bold red]")
             console.print(f"[bold red]错误信息:{e}[/bold red]")
-            console.print(f"[bold red]错误题目:{title}")
+
 
     @staticmethod
     def error(item: bs4.element.Tag, console: Console):
