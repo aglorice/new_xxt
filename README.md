@@ -9,7 +9,7 @@
 
 ![GitHub stars](https://img.shields.io/github/stars/aglorice/new_xxt.svg)
 ![python](https://img.shields.io/badge/python-3.10-blue)
-![version](https://img.shields.io/badge/version-v0.4.8-blue)
+![version](https://img.shields.io/badge/version-v0.4.9-blue)
 ![contributors](https://badgen.net/github/contributors/aglorice/new_xxt)
 ![prs](https://badgen.net/github/prs/aglorice/new_xxt)
 
