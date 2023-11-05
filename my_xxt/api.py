@@ -406,13 +406,15 @@ class NewXxt:
         # 解析做作业的页面的url
         do_work_url_params = urlparse(work_view_html.url)
         do_work_params = parse.parse_qs(do_work_url_params.query)
-        try:
-            for _input in input_date:
+
+        for _input in input_date:
+            try:
                 _key = re.findall(r'id="(.*?)"', str(_input))
                 _value = str(_input.attrs['value'])
                 commit_date_form[_key[0]] = _value
-        except Exception as e:
-            commit_date_form = commit_date_form
+            except Exception as e:
+                continue
+
         commit_date = {
             "_classId": work_date["_classId"][0],
             "courseid": work_date["courseid"][0],
@@ -572,8 +574,8 @@ class NewXxt:
         :return:
         """
         commit_from_1 = {
-            "courseId": commit_from["courseId"],
-            "classId": commit_from["classId"],
+            "courseId": commit_from["courseid"],
+            "classId": commit_from["_classId"],
             "knowledgeId": commit_from["knowledgeId"],
             "cpi": commit_from["cpi"],
             "workRelationId": commit_from["workRelationId"],
