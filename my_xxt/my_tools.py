@@ -207,6 +207,7 @@ def select_menu(console: Console, xxt: NewXxt) -> None:
             fail_count = 0
             for user in users_select:
                 i = i + 1
+                xxt = NewXxt()
                 login_status = xxt.login(user["phone"], user["password"])
                 # 判断登录成功与否
                 if login_status["status"] == True:
@@ -236,7 +237,7 @@ def select_menu(console: Console, xxt: NewXxt) -> None:
                         else:
                             dir_path = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
                             path = os.path.join(dir_path, "answers", f"{work['id']}.json")
-                            answer = match_answer(jsonFileToDate(path)[work["id"]], questions)
+                            answer = match_answer(jsonFileToDate(path)[work["id"]], questions, xxt.randomOptions)
                             ret = xxt.commit_work(answer, work)
                             # 作业提交成功
                             if ret["msg"] == 'success!':
