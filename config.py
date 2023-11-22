@@ -1,4 +1,4 @@
 
 
-__VERSION__ = "v0.5.0"
+__VERSION__ = "v0.5.1"
 __AUTHOR__ = "aglorice"
