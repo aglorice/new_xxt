@@ -8,8 +8,10 @@ import os
 import time
 
 from qrcode import QRCode
-from rich.console import Console
+from rich.console import Console, Group
+from rich.panel import Panel
 from rich.table import Table
+from rich.text import Text
 
 from my_xxt.api import NewXxt
 from my_xxt.my_tools import select_error, jsonFileToDate
@@ -30,7 +32,7 @@ def login(console: Console, xxt: NewXxt) -> None:
             dir_path = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
             path = os.path.join(dir_path, "user.json")
             ret = jsonFileToDate(path)
-            user = select_users(ret,console)
+            user = select_users(ret, console)
             login_status = xxt.login(user["phone"], user["password"])
             if not login_status["status"]:
                 flag = console.input("[green]登录失败,请重新尝试！(按q退出,按任意键继续):")
@@ -45,11 +47,17 @@ def login(console: Console, xxt: NewXxt) -> None:
 
 
 def select_login(console: Console):
-    console.rule("登录方式")
-    console.print("1.手机号密码登录", highlight=True, justify="center")
-    console.print("2.扫码登录", highlight=True, justify="center")
-    console.print("3.查看当前所有账号（选择其中的一个登录）", highlight=True, justify="center")
-    console.rule("")
+    console.print(Panel(
+        title="[green]登陆方式",
+        renderable=
+        Group(
+            Text("1.手机号密码登录", justify="center", style="bold blue"),
+            Text("2.扫码登录", justify="center", style="bold blue"),
+            Text("3.查看当前所有账号（选择其中的一个登录）", justify="center", style="bold blue"),
+        ),
+        style="bold green",
+        width=120,
+    ))
     choose = console.input("请选择你要登录的方式:")
     return choose
 
@@ -98,23 +106,28 @@ def qr_login(console: Console, xxt: NewXxt):
         time.sleep(1.0)
 
 
-def select_users(users: dict,console:Console):
-    tb = Table("序号", "账号", "密码","姓名", border_style="blue")
+def select_users(users: dict, console: Console):
+    tb = Table("序号", "账号", "密码", "姓名", border_style="blue",width=116)
     i = 0
     for user in users["users"]:
         tb.add_row(
-            f"[green]{i+1}",
+            f"[green]{i + 1}",
             user["phone"],
             user["password"],
             user["name"],
+            style="bold yellow"
         )
-        i = i+1
-    console.rule("[blue]用户表", characters="*")
-    console.print(tb)
+        i = i + 1
+    console.print(
+        Panel(
+            title="[green]用户表",
+            renderable=tb,
+            style="bold green",
+        )
+    )
     while True:
         user_id = int(console.input("[yellow]请选择你要登录的账号:"))
         try:
-            return users["users"][user_id-1]
+            return users["users"][user_id - 1]
         except Exception as e:
             select_error(console)
-

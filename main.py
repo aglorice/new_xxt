@@ -4,7 +4,7 @@ from my_xxt.api import NewXxt
 from my_xxt.login import login
 
 # 设置控制台的宽度
-console = Console(width=100)
+console = Console(width=120)
 
 if __name__ == '__main__':
     while True:

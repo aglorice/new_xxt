@@ -10,8 +10,10 @@ import os
 import shutil
 import time
 
-from rich.console import Console
+from rich.console import Console, Group
+from rich.panel import Panel
 from rich.table import Table
+from rich.text import Text
 
 from my_xxt.findAnswer import match_answer
 from my_xxt.api import NewXxt
@@ -278,20 +280,27 @@ def find_work(works: list, work_id: str) -> dict:
 
 
 def show_start(console: Console) -> None:
-    console.rule("欢迎使用该做题脚本")
-    console.print("    ███╗   ██╗███████╗██╗    ██╗        ██╗  ██╗██╗  ██╗████████╗\n \
+
+    console.print(Panel(
+        title="[white]欢迎使用该做题脚本",
+        renderable=
+        Group(
+            Text("    ███╗   ██╗███████╗██╗    ██╗        ██╗  ██╗██╗  ██╗████████╗\n \
    ████╗  ██║██╔════╝██║    ██║        ╚██╗██╔╝╚██╗██╔╝╚══██╔══╝\n \
  ██╔██╗ ██║█████╗  ██║ █╗ ██║         ╚███╔╝  ╚███╔╝    ██║\n\
   ██║╚██╗██║██╔══╝  ██║███╗██║         ██╔██╗  ██╔██╗    ██║\n\
   ██║ ╚████║███████╗╚███╔███╔╝███████╗██╔╝ ██╗██╔╝ ██╗   ██║\n\
-  ╚═╝  ╚═══╝╚══════╝ ╚══╝╚══╝ ╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝  ", justify="center")
-
-    console.print("[red]注意：该脚本仅供学习参考,详细信息请参考https://github.com/aglorice/new_xxt")
-    console.print(f"[red]当前版本为 {__VERSION__}")
+  ╚═╝  ╚═══╝╚══════╝ ╚══╝╚══╝ ╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝  ", justify="center",style="bold white"),
+            Text("注意：该脚本仅供学习参考,详细信息请参考https://github.com/aglorice/new_xxt", justify="center", style="bold red"),
+            Text(f"当前版本为 {__VERSION__}", justify="center", style="bold red"),
+        ),
+        style="bold green",
+        width=120,
+    ))
 
 
 def show_users(users: dict, console: Console) -> None:
-    tb = Table("序号", "账号", "密码", "姓名", border_style="blue")
+    tb = Table("序号", "账号", "密码", "姓名", border_style="blue", width=116)
     i = 0
 
     for user in users["users"]:
@@ -302,20 +311,32 @@ def show_users(users: dict, console: Console) -> None:
             user["name"],
         )
         i = i + 1
-    console.rule("[blue]用户表", characters="*")
-    console.print(tb)
+
+    console.print(
+        Panel(
+            title="[blue]用户表",
+            renderable=tb,
+            style="bold green",
+        )
+    )
 
 
 def show_course(courses: list, console: Console) -> None:
-    tb = Table("序号", "课程名", "老师名", border_style="blue")
+    tb = Table("序号", "课程名", "老师名", border_style="blue", width=116)
     for course in courses:
         tb.add_row(
             f"[green]{course['id']}",
             course["course_name"],
             course["course_teacher"],
+            style="bold yellow"
         )
-    console.rule("[blue]课程信息", characters="*")
-    console.print(tb)
+    console.print(
+        Panel(
+            title="[blue]课程信息",
+            renderable=tb,
+            style="bold green",
+        )
+    )
 
 
 def select_users(users: dict, console: Console) -> list:
@@ -334,44 +355,62 @@ def select_users(users: dict, console: Console) -> list:
 
 
 def show_menu(console: Console) -> None:
-    console.rule("[green]菜单", characters="+")
-    console.print("1.查看课程", highlight=True)
-    console.print("2.查看当前所有答案文件", highlight=True)
-    console.print("3.查询所有未完成的作业", highlight=True)
-    console.print("4.清除所有答案文件", highlight=True)
-    console.print("5.爬取指定作业的答案", highlight=True)
-    console.print("6.批量爬取指定课程的答案", highlight=True)
-    console.print("7.完成作业（请先确认是否已经爬取了你想要完成作业的答案）", highlight=True)
-    console.print("8.批量完成作业完成作业（请先确认是否已经爬取了你想要完成作业的答案，请填好user.json里的账号数据）",
-                  highlight=True)
-    console.print("9.退出登录", highlight=True)
-    console.rule(characters="+")
+    console.print(Panel(
+        title="[green]菜单",
+        renderable=
+        Group(
+            Text("1.查看课程", justify="center", style="bold yellow"),
+            Text("2.查看当前所有答案文件", justify="center", style="bold yellow"),
+            Text("3.查询所有未完成的作业", justify="center", style="bold yellow"),
+            Text("4.清除所有答案文件", justify="center", style="bold yellow"),
+            Text("5.爬取指定作业的答案", justify="center", style="bold yellow"),
+            Text("6.批量爬取指定课程的答案", justify="center", style="bold yellow"),
+            Text("7.完成作业（请先确认是否已经爬取了你想要完成作业的答案）", justify="center", style="bold yellow"),
+            Text("8.批量完成作业完成作业（请先确认是否已经爬取了你想要完成作业的答案，请填好user.json里的账号数据）",
+                 justify="center", style="bold yellow"),
+            Text("9.退出登录", justify="center", style="bold yellow"),
+        ),
+        style="bold green",
+        width=120,
+    ))
 
 
 def show_works(works: list, console: Console) -> None:
-    tb = Table("id", "作业名称", "作业状态", "分数", "是否可以重做", border_style="blue")
+    tb = Table("id", "作业名称", "作业状态", "分数", "是否可以重做", border_style="blue", width=116)
     for work in works:
         tb.add_row(
             f"[green]{work['work_id']}",
             work['work_name'],
             work["work_status"],
             work["score"],
-            work["isRedo"]
+            work["isRedo"],
+            style="bold yellow"
         )
-    console.rule("[blue]作业信息", characters="*")
-    console.print(tb)
+    console.print(
+        Panel(
+            title="[blue]作业信息",
+            renderable=tb,
+            style="bold green",
+        )
+    )
 
 
 def show_answer(console: Console, answer_list: list) -> None:
-    tb = Table("id", "题目名称", "答案", border_style="blue")
+    tb = Table("id", "题目名称", "答案", border_style="blue", width=116)
     for answer in answer_list:
         tb.add_row(
             f"[green]{answer['id']}",
             answer['title'],
-            str(answer["answer"])
+            str(answer["answer"]),
+            style="bold yellow"
         )
-    console.rule("[blue]检查答案", characters="*")
-    console.print(tb)
+    console.print(
+        Panel(
+            title="[blue]检查答案",
+            renderable=tb,
+            style="bold green",
+        )
+    )
 
 
 def dateToJsonFile(answer: list, info: dict) -> None:
@@ -410,16 +449,22 @@ def show_all_answer_file(console: Console) -> None:
         _path = os.path.join(path, item)
         answer_file_info.append(jsonFileToDate(_path)["info"])
 
-    tb = Table("id", "作业名", "文件名称", "课程名称", border_style="blue")
+    tb = Table("id", "作业名", "文件名称", "课程名称", border_style="blue", width=116)
     for work_info in answer_file_info:
         tb.add_row(
             f"[green]{work_info['id']}",
             work_info["work_name"],
             work_info["id"] + ".json",
             work_info["course_name"],
+            style="bold yellow"
         )
-    console.rule("[blue]作业文件列表", characters="*")
-    console.print(tb)
+    console.print(
+        Panel(
+            title="[blue]作业文件列表",
+            renderable=tb,
+            style="bold green",
+        )
+    )
 
 
 def is_exist_answer_file(work_file_name: str) -> bool:
@@ -464,13 +509,20 @@ def get_not_work(courses: list, xxt: NewXxt, console: Console, sleep_time: float
 
 
 def show_not_work(not_work: list, console: Console) -> None:
-    tb = Table("id", "作业名", "课程名称", "作业状态", border_style="blue")
+    tb = Table("id", "作业名", "课程名称", "作业状态", border_style="blue", width=116)
     for work in not_work:
         tb.add_row(
             f"[green]{work['id']}",
             work["work_name"],
             work["course_name"],
             f"[green]{work['work_status']}",
+            style="bold yellow"
         )
-    console.rule("[blue]作业文件列表", characters="*")
-    console.print(tb)
+
+    console.print(
+        Panel(
+            title="[blue]作业文件列表",
+            renderable=tb,
+            style="bold green",
+        )
+    )
