@@ -254,9 +254,9 @@ def select_menu(console: Console, xxt: NewXxt) -> None:
                                 fail_count = fail_count + 1
                                 continue
                 else:
-                    console.log(f"({i})  [green]{user['name']}---该用户的作业操作失败[red]账号或者密码错误")
+                    console.log(f"({i})  [green]{user['name']}---该用户的作业操作失败:[red]账号或者密码错误[/red][/green]")
                     fail_count = fail_count + 1
-            console.log(f"[yellow]一共成功{success_count},失败数为{fail_count}")
+            console.log(f"[yellow]一共成功{success_count},失败数为{fail_count}[/yellow]")
             continue
         # 退出登录
         elif index == "9":
@@ -305,7 +305,7 @@ def show_users(users: dict, console: Console) -> None:
 
     for user in users["users"]:
         tb.add_row(
-            f"[green]{i + 1}",
+            f"[green]{i + 1}[/green]",
             user["phone"],
             user["password"],
             user["name"],
@@ -314,7 +314,7 @@ def show_users(users: dict, console: Console) -> None:
 
     console.print(
         Panel(
-            title="[blue]用户表",
+            title="[blue]用户表[/blue]",
             renderable=tb,
             style="bold green",
         )
@@ -325,14 +325,14 @@ def show_course(courses: list, console: Console) -> None:
     tb = Table("序号", "课程名", "老师名", border_style="blue", width=116)
     for course in courses:
         tb.add_row(
-            f"[green]{course['id']}",
+            f"[green]{course['id']}[/green]",
             course["course_name"],
             course["course_teacher"],
             style="bold yellow"
         )
     console.print(
         Panel(
-            title="[blue]课程信息",
+            title="[blue]课程信息[/blue]",
             renderable=tb,
             style="bold green",
         )
@@ -341,7 +341,7 @@ def show_course(courses: list, console: Console) -> None:
 
 def select_users(users: dict, console: Console) -> list:
     user_list = []
-    users_id = console.input("[yellow]请选择你要完成此作业的账号 如(1,2,3) 英文逗号 全选请输入 all :")
+    users_id = console.input("请选择你要完成此作业的账号 如(1,2,3) 英文逗号 全选请输入 all :")
     if users_id == "all":
         return users["users"]
     users_id = users_id.replace(" ", "")
@@ -379,7 +379,7 @@ def show_works(works: list, console: Console) -> None:
     tb = Table("id", "作业名称", "作业状态", "分数", "是否可以重做", border_style="blue", width=116)
     for work in works:
         tb.add_row(
-            f"[green]{work['work_id']}",
+            f"[green]{work['work_id']}[/green]",
             work['work_name'],
             work["work_status"],
             work["score"],
@@ -399,7 +399,7 @@ def show_answer(console: Console, answer_list: list) -> None:
     tb = Table("id", "题目名称", "答案", border_style="blue", width=116)
     for answer in answer_list:
         tb.add_row(
-            f"[green]{answer['id']}",
+            f"[green]{answer['id']}[/green]",
             answer['title'],
             str(answer["answer"]),
             style="bold yellow"
@@ -452,7 +452,7 @@ def show_all_answer_file(console: Console) -> None:
     tb = Table("id", "作业名", "文件名称", "课程名称", border_style="blue", width=116)
     for work_info in answer_file_info:
         tb.add_row(
-            f"[green]{work_info['id']}",
+            f"[green]{work_info['id']}[/green]",
             work_info["work_name"],
             work_info["id"] + ".json",
             work_info["course_name"],
@@ -460,7 +460,7 @@ def show_all_answer_file(console: Console) -> None:
         )
     console.print(
         Panel(
-            title="[blue]作业文件列表",
+            title="[blue]作业文件列表[/blue]",
             renderable=tb,
             style="bold green",
         )
@@ -491,7 +491,7 @@ def del_file(path_data: str):
 def get_not_work(courses: list, xxt: NewXxt, console: Console, sleep_time: float = 1) -> list:
     not_work = []
     for course in courses:
-        with console.status(f"[red]正在查找《{course['course_name']}》...[{course['id']}/{len(courses)}]"):
+        with console.status(f"[red]正在查找《{course['course_name']}》...[{course['id']}/{len(courses)}][/red]"):
             time.sleep(sleep_time)
             try:
                 works = xxt.getWorks(course["course_url"], course["course_name"])
@@ -504,7 +504,7 @@ def get_not_work(courses: list, xxt: NewXxt, console: Console, sleep_time: float
                             "course_name": work["course_name"]
                         })
             except Exception as e:
-                console.log(f"[red]在查找课程[green]《{course['course_name']}》[/green]出现了一点小意外")
+                console.log(f"[red]在查找课程[green]《{course['course_name']}》[/green]出现了一点小意外[/red]")
     return not_work
 
 
@@ -512,7 +512,7 @@ def show_not_work(not_work: list, console: Console) -> None:
     tb = Table("id", "作业名", "课程名称", "作业状态", border_style="blue", width=116)
     for work in not_work:
         tb.add_row(
-            f"[green]{work['id']}",
+            f"[green]{work['id']}[/green]",
             work["work_name"],
             work["course_name"],
             f"[green]{work['work_status']}",
@@ -521,7 +521,7 @@ def show_not_work(not_work: list, console: Console) -> None:
 
     console.print(
         Panel(
-            title="[blue]作业文件列表",
+            title="[blue]作业文件列表[/blue]",
             renderable=tb,
             style="bold green",
         )

@@ -120,7 +120,7 @@ def select_users(users: dict, console: Console):
         i = i + 1
     console.print(
         Panel(
-            title="[green]用户表",
+            title="用户表",
             renderable=tb,
             style="bold green",
         )
