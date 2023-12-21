@@ -16,13 +16,13 @@ class MyConsole(Console):
     def log(self, *args, **kwargs):
         super().log(*args, **kwargs)
         if not self.log_file.closed:
-            self.log_file.write(" ".join(map(str, args)) + "\n")
+            self.log_file.write("\n"+" ".join(map(str, args)) + "\n")
 
     def print(self, *args, **kwargs):
         super().print(*args, **kwargs)
         captured_output_value = super().export_text()
         if not self.log_file.closed:
-            self.log_file.write(captured_output_value)
+            self.log_file.write("\n"+captured_output_value+"\n")
 
     def cleanup(self):
         if not self.log_file.closed:
@@ -33,7 +33,7 @@ class MyConsole(Console):
 
 
 def main():
-    console = MyConsole(width=__SCREEN_WIDTH__,record=True)
+    console = MyConsole(width=__SCREEN_WIDTH__, record=True)
     install(console=console, show_locals=True, width=__SCREEN_WIDTH__)
 
     try:
