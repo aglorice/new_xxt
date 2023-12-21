@@ -22,7 +22,7 @@ from config import __VERSION__
 
 
 def select_error(console: Console):
-    console.print("[green]发生了一些未知的错误！")
+    console.log("[green]发生了一些未知的错误！")
     flag = console.input("[green]请选择是否重新选择！(按q退出,按任意键继续)")
     if flag == 'q':
         exit(0)
@@ -90,7 +90,7 @@ def select_menu(console: Console, xxt: NewXxt) -> None:
             dirpath = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
             path = os.path.join(dirpath, "answers")
             del_file(path)
-            console.print(f"[green]清空完毕")
+            console.log(f"[green]清空完毕")
             continue
         # 爬取指定课程的指定的作业（已完成）
         elif index == "5":
@@ -112,7 +112,7 @@ def select_menu(console: Console, xxt: NewXxt) -> None:
                 continue
             # 保存答案至answer文件
             dateToJsonFile(answer_list, work)
-            console.print(f"[green]爬取成功，答案已经保存至{work['id']}.json")
+            console.log(f"[green]爬取成功，答案已经保存至{work['id']}.json")
             continue
         # 批量导出指定课程的作业
         elif index == "6":
@@ -125,7 +125,7 @@ def select_menu(console: Console, xxt: NewXxt) -> None:
             # 爬取答案
             works = select_works(console, works)
             if works == []:
-                console.print("[red]该课程下没有作业")
+                console.log("[red]该课程下没有作业")
                 continue
             i = 0
             for work in works:
@@ -135,13 +135,13 @@ def select_menu(console: Console, xxt: NewXxt) -> None:
                         if work["work_status"] == "已完成":
                             answer_list = xxt.getAnswer(work["work_url"])
                         else:
-                            console.print("[red]该作业似乎没有完成")
+                            console.log("[red]该作业似乎没有完成")
                             continue
                         # 保存答案至answer文件
                         dateToJsonFile(answer_list, work)
                         continue
                     except Exception as e:
-                        console.print("[red]出现了一点小意外", e)
+                        console.log("[red]出现了一点小意外", e)
             console.log("[green]爬取成功")
             continue
         # 完成指定课程的指定作业（未完成）
@@ -155,10 +155,10 @@ def select_menu(console: Console, xxt: NewXxt) -> None:
             # 完成作业
             work = select_work(console, works)
             if work == {}:
-                console.print("[red]该课程下没有作业")
+                console.log("[red]该课程下没有作业")
                 continue
             if work["work_status"] == "已完成" and work["isRedo"] == "no":
-                console.print("[red]该作业已经完成了")
+                console.log("[red]该作业已经完成了")
                 continue
             else:
                 if work["isRedo"] == "yes":
@@ -168,12 +168,12 @@ def select_menu(console: Console, xxt: NewXxt) -> None:
                     else:
                         result = xxt.redoWork(work["work_url"])
                         if result["status"] == 1:
-                            console.print("[green]作业重做成功")
+                            console.log("[green]作业重做成功")
                         else:
-                            console.print(f"[red]作业重做失败,错误原因[red]{result['msg']}[/red]")
+                            console.log(f"[red]作业重做失败,错误原因[red]{result['msg']}[/red]")
                 questions = xxt.get_question(work["work_url"])
             if not is_exist_answer_file(f"{work['id']}.json"):
-                console.print("[green]没有在答案文件中匹配到对应的答案文件")
+                console.log("[green]没有在答案文件中匹配到对应的答案文件")
                 continue
             else:
                 dir_path = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
@@ -219,20 +219,20 @@ def select_menu(console: Console, xxt: NewXxt) -> None:
                     work = find_work(works, work["work_id"])
                     # 判断是否存在作业或者课程
                     if course == {} or work == {}:
-                        console.print(
+                        console.log(
                             f"({i})  [green]{user['name']}---该用户的作业操作失败[red]该账号不存在该课程或者作业")
                         fail_count = fail_count + 1
                     else:
                         # 判断作业是什么状态
                         if work["work_status"] == "已完成":
-                            console.print(f"({i})  [green]{user['name']}---该用户的作业操作失败[red]该账号已完成该作业")
+                            console.log(f"({i})  [green]{user['name']}---该用户的作业操作失败[red]该账号已完成该作业")
                             fail_count = fail_count + 1
                             continue
                         else:
                             questions = xxt.get_question(work["work_url"])
                         # 判断是否存在答案文件
                         if not is_exist_answer_file(f"{work['id']}.json"):
-                            console.print(
+                            console.log(
                                 f"({i})  [green]{user['name']}---该用户的作业操作失败[red]没有在答案文件中匹配到对应的答案文件")
                             fail_count = fail_count + 1
                             continue
@@ -245,16 +245,16 @@ def select_menu(console: Console, xxt: NewXxt) -> None:
                             if ret["msg"] == 'success!':
                                 works = xxt.getWorks(course["course_url"], course["course_name"])
                                 work = find_work(works, work["work_id"])
-                                console.print(
+                                console.log(
                                     f"({i})  [green]{user['name']}---该用户的作业操作成功[blue]最终分数为{work['score']}")
                                 success_count = success_count + 1
                             else:
-                                console.print(
+                                console.log(
                                     f"({i})  [green]{user['name']}---该用户的作业操作失败 {ret},你可以再次尝试一次。")
                                 fail_count = fail_count + 1
                                 continue
                 else:
-                    console.print(f"({i})  [green]{user['name']}---该用户的作业操作失败[red]账号或者密码错误")
+                    console.log(f"({i})  [green]{user['name']}---该用户的作业操作失败[red]账号或者密码错误")
                     fail_count = fail_count + 1
             console.log(f"[yellow]一共成功{success_count},失败数为{fail_count}")
             continue
@@ -504,7 +504,7 @@ def get_not_work(courses: list, xxt: NewXxt, console: Console, sleep_time: float
                             "course_name": work["course_name"]
                         })
             except Exception as e:
-                console.print(f"[red]在查找课程[green]《{course['course_name']}》[/green]出现了一点小意外")
+                console.log(f"[red]在查找课程[green]《{course['course_name']}》[/green]出现了一点小意外")
     return not_work
 
 

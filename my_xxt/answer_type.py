@@ -167,8 +167,8 @@ class AnswerType:
             }
             return question_answer
         except Exception as e:
-            console.print(f"[bold red]其他题目解析错误[/bold red]")
-            console.print(f"[bold red]错误信息:{e}[/bold red]")
+            console.log(f"[bold red]其他题目解析错误[/bold red]")
+            console.log(f"[bold red]错误信息:{e}[/bold red]")
 
 
     @staticmethod
@@ -178,8 +178,8 @@ class AnswerType:
             console.log(f"[bold red]该题目类型[bold green]{title_type}[/bold green]还没有支持，请到本项目提交issue[/bold red]")
             return {}
         except Exception as e:
-            console.print(f"[bold red]题目解析错误[/bold red]")
-            console.print(f"[bold red]错误信息:{e}[/bold red]")
+            console.log(f"[bold red]题目解析错误[/bold red]")
+            console.log(f"[bold red]错误信息:{e}[/bold red]")
             return None
 
 

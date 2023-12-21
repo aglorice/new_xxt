@@ -73,7 +73,7 @@ def phone_login(console: Console, xxt: NewXxt):
                 exit()
         else:
             info = xxt.getInfo()
-            console.print(f"[green]登录成功,{info['name']}")
+            console.log(f"[green]登录成功,{info['name']}")
             return True
 
 
@@ -88,18 +88,18 @@ def qr_login(console: Console, xxt: NewXxt):
         qr_status = xxt.login_qr()
         if qr_status["status"]:
             info = xxt.getInfo()
-            console.print(f"[green]登录成功,{info['name']}")
+            console.log(f"[green]登录成功,{info['name']}")
             return True
         match qr_status.get("type"):
             case "1":
-                console.print("[red]二维码验证错误")
+                console.log("[red]二维码验证错误")
                 break
             case "2":
-                console.print("[red]二维码已失效")
+                console.log("[red]二维码已失效")
                 break
             case "4":
                 if not flag_scan:
-                    console.print(
+                    console.log(
                         f"[green]二维码已扫描"
                     )
                 flag_scan = True
