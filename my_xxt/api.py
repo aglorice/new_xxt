@@ -480,6 +480,7 @@ class NewXxt:
         :return:
         """
         work_question = []
+        
         work_question_view = self.sees.get(
             url=work_url,
             headers={
@@ -487,6 +488,7 @@ class NewXxt:
             },
             params=params,
         )
+    
         work_view_soup = BeautifulSoup(work_question_view.text, "lxml")
         randomOptions_soup = work_view_soup.find_all("input", attrs={"id": "randomOptions"})
 
@@ -494,7 +496,9 @@ class NewXxt:
         randomOptions = re.findall(r'value="(.*?)"', str(randomOptions_soup))[0]
         self.randomOptions = randomOptions
 
-        work_view = work_view_soup.find_all("div", attrs={"class": "padBom50 questionLi fontLabel"})
+        work_view = work_view_soup.find_all("div", attrs={"class": "padBom50 questionLi fontLabel singleQuesId"})
+
+
         _question_type = QuestionType()
         for item in work_view:
             title_type = item.find_next("span").string.split(",")[0].replace("(", "").replace(")", "")
