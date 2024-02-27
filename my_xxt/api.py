@@ -372,8 +372,9 @@ class NewXxt:
                 "User-Agent": self.header,
             },
         )
+        
         work_view_soup = BeautifulSoup(work_answer_view.text, "lxml")
-        work_view = work_view_soup.find_all("div", attrs={"class": "marBom60 questionLi"})
+        work_view = work_view_soup.find_all("div", attrs={"class": "marBom60 questionLi singleQuesId"})
         _answer_type = AnswerType()
         for item in work_view:
             title_type = item.find_next("span").string.split(",")[0].replace("(", "").replace(")", "")
