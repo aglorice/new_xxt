@@ -1,6 +1,6 @@
 
 
-__VERSION__ = "v0.5.5"
+__VERSION__ = "v0.5.6"
 __AUTHOR__ = "aglorice"
 # 日志文件
 __LOG_FILE__ = "logfile.log"
